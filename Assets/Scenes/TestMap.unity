@@ -159,7 +159,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Size: {x: 2, y: 3, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &173337697
 CapsuleCollider:
@@ -384,11 +384,11 @@ MonoBehaviour:
   Player: {fileID: 173337700}
   CurrentEnnemy: {fileID: 1216327394}
   Chasing: 1
-  MoveSpeed: 3
   agent: {fileID: 0}
   Run: {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
   Attack: {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
   MinimumDistance: 2
+  animator: {fileID: 0}
 --- !u!195 &1216327396
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1428727467}
   m_LocalRotation: {x: 0.5971807, y: -0, z: -0, w: 0.80210674}
-  m_LocalPosition: {x: -0.7599945, y: 6.8099995, z: -1.5200043}
+  m_LocalPosition: {x: -0.7599945, y: 9.67, z: -2.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 173337700}
