@@ -13,10 +13,12 @@ public class EnnemyAI : MonoBehaviour
     public AnimationClip Run;
     public AnimationClip Attack;
     public float MinimumDistance = 3;
+    public Animator animator;
     // Use this for initialization
     void Start()
     {
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,10 +31,15 @@ public class EnnemyAI : MonoBehaviour
         }
         if(distance <= MinimumDistance)
         {
+            animator.SetLookAtPosition(Player.position);
             GetComponent<Animation>().CrossFade(Attack.name);
+            agent.enabled = false;
+        }
+        else
+        {
+            agent.enabled = true;
         }
         agent.destination = Player.position;
-    
     }
 }
 
