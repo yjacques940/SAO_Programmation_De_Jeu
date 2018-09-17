@@ -7,8 +7,9 @@ using System;
 
 public class EnnemyAI : MonoBehaviour
 {
+    public float PlayerDetector = 10f;
     public float MinimumDistance = 6;
-    public bool Chasing = true;
+    public bool Chasing = false;
     public bool IsAttacking = false;
     public NavMeshAgent Monster;
     public AnimationClip Run;
@@ -25,10 +26,20 @@ public class EnnemyAI : MonoBehaviour
     
     void Update()
     {
-        var distance = Vector3.Distance(Monster.transform.position, Player.transform.position);
-        FollowPlayer(distance);
-        CheckDistance(distance);
-        MonsterHasNoTarget();
+        var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
+        if(distance <= PlayerDetector)
+        {
+            Chasing = true;
+            FollowPlayer(distance);
+            CheckDistance(distance);
+            MonsterHasNoTarget();
+        }
+        else
+        {
+            Chasing = false;
+            IsAttacking = false;
+            MonsterHasNoTarget();
+        }
     }
 
     private void FollowPlayer(float distance)
