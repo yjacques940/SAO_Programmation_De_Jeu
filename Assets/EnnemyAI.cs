@@ -2,54 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
+using System;
 
 public class EnnemyAI : MonoBehaviour
 {
-    public Transform Player;
+    public float MinimumDistance = 6;
     public bool Chasing = true;
-    int MoveSpeed = 3;
-    public UnityEngine.AI.NavMeshAgent agent;
+    public bool IsAttacking = false;
+    public NavMeshAgent Monster;
     public AnimationClip Run;
     public AnimationClip Attack;
     public AnimationClip Idle;
-    public float MinimumDistance = 6;
-    // Use this for initialization
+    public AnimationClip Die;
+    public Transform Player;
+
     void Start()
     {
-        agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        Monster = gameObject.GetComponent<NavMeshAgent>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        var distance = Vector3.Distance(agent.transform.position, Player.transform.position);
-      
-        if (Chasing)
-        {
-            GetComponent<Animation>().CrossFade(Run.name);
-        }
+        var distance = Vector3.Distance(Monster.transform.position, Player.transform.position);
+        FollowPlayer(distance);
+        CheckDistance(distance);
+        MonsterHasNoTarget();
+    }
+
+    private void FollowPlayer(float distance)
+    {
+        GetComponent<Animation>().CrossFade(Run.name);
         if (distance > MinimumDistance)
         {
-            if(agent.transform.position.x > 0)
+            if (Monster.transform.position.x > 0)
             {
-                agent.destination = Player.position - new Vector3(MinimumDistance/4, 0,0);
+                Monster.destination = Player.position - new Vector3(MinimumDistance, 0, 0);
             }
             else
             {
-                agent.destination = Player.position + new Vector3(MinimumDistance/4, 0,0);
+                Monster.destination = Player.position + new Vector3(MinimumDistance, 0, 0);
             }
+            LookPlayer();
         }
-        if (distance <= MinimumDistance+1)
+    }
+
+    private void CheckDistance(float distance)
+    {
+        if (distance <= MinimumDistance + 1)
         {
+            IsAttacking = true;
+            LookPlayer();
             GetComponent<Animation>().CrossFade(Attack.name);
             Chasing = false;
         }
-        //if(!Chasing && !Attack)
-        //{
-        //    GetComponent<Animation>().CrossFade(Idle.name);
-        //}
-       
+    }
+
+    private void MonsterHasNoTarget()
+    {
+        if (!Chasing && !Attack)
+        {
+            GetComponent<Animation>().CrossFade(Idle.name);
+        }
+    }
+
+    private void LookPlayer()
+    {
+        var playerXPosition = Player.transform.position.x;
+        var playerZPosition = Player.transform.position.z;
+        Monster.transform.LookAt(new Vector3(playerXPosition, 0, playerZPosition));
     }
 }
 
