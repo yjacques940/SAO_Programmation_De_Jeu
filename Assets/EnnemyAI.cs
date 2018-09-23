@@ -17,13 +17,14 @@ public class EnnemyAI : MonoBehaviour
     public AnimationClip Idle;
     public AnimationClip Die;
     public Transform Player;
+    
 
     void Start()
     {
         Monster = gameObject.GetComponent<NavMeshAgent>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    
+
     void Update()
     {
         var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
