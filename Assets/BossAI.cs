@@ -7,6 +7,8 @@ namespace Assets
 {
     public class BossAI : MonoBehaviour
     {
+        public bool IsDead = false;
+        public bool IsDialogDone = false;
         public bool Chasing = false;
         public bool IsAttacking = false;
         public float MinimumDistance = 6;
@@ -15,38 +17,47 @@ namespace Assets
         public AnimationClip Idle;
         public AnimationClip Die;
         public Transform Player;
-        public Transform Boss;
+        public NavMeshAgent Boss;
         public int LifeOfBoss = 5;
-        public bool IsDead = false;
+        
 
         void Start()
         {
-            Boss = GameObject.FindGameObjectWithTag("Boss").transform;
+            Boss = gameObject.GetComponent<NavMeshAgent>();
         }
 
         void Update()
         {
             if (!IsDead)
             {
-                if(LifeOfBoss == 0)
-                {
-                    Dead();
-                }
+                DialogWithBossIsDone();
                 var distance = Vector3.Distance(Player.transform.position, Boss.transform.position);
-                if (DialogWithBossIsDone())
+                if (IsDialogDone)
                 {
-                    if (IsGettingAttacked())
-                    {
-                        Chasing = true;
-                        IsAttacking = true;
-                        FollowPlayer(distance);
-                        CheckDistance(distance);
-                    }
+                    StartFight(distance);
+                        
                 }
                 else
                 {
                     GetComponent<Animation>().CrossFade(Idle.name);
                 }
+            }
+        }
+
+        private void StartFight(float distance)
+        {
+            Chasing = true;
+            IsAttacking = true;
+            FollowPlayer(distance);
+            CheckDistance(distance);
+        }
+
+        public void ApplyDamageOnBoss(int damage)
+        {
+            LifeOfBoss = LifeOfBoss - damage;
+            if (LifeOfBoss == 0)
+            {
+                Dead();
             }
         }
 
@@ -57,11 +68,6 @@ namespace Assets
             Destroy(Boss.gameObject, 10);
         }
 
-        private bool IsGettingAttacked()
-        {
-            return true;
-        }
-
         private void FollowPlayer(float distance)
         {
             GetComponent<Animation>().CrossFade(Run.name);
@@ -69,11 +75,11 @@ namespace Assets
             {
                 if (Boss.transform.position.x > 0)
                 {
-                    Boss.position = Player.position - new Vector3(MinimumDistance, 0, 0);
+                    Boss.destination = Player.position - new Vector3(MinimumDistance, 0, 0);
                 }
                 else
                 {
-                    Boss.position = Player.position + new Vector3(MinimumDistance, 0, 0);
+                    Boss.destination = Player.position + new Vector3(MinimumDistance, 0, 0);
                 }
                 LookPlayer();
             }
@@ -97,9 +103,13 @@ namespace Assets
             }
         }
 
-        private bool DialogWithBossIsDone()
+        private void DialogWithBossIsDone()
         {
-            return true;
+            print(Input.GetAxis("Jump"));
+            if(Input.GetAxis("Jump") > 0)
+            {
+                IsDialogDone = true;
+            }
         }
     }
 }

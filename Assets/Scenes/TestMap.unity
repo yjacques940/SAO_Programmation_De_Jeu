@@ -286,8 +286,28 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
       propertyPath: m_TagString
-      value: Ennemy
+      value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400008, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
+    - target: {fileID: 11100000, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
+      propertyPath: m_Animations.Array.data[4]
+      value: 
+      objectReference: {fileID: 7400008, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10a1e47d0d282414481a0b2a67c79333, type: 3}
   m_IsPrefabAsset: 0
@@ -572,27 +592,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1272634390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1272634385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f815c8628819e854882bed4a40facd56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerDetector: 10
-  MinimumDistance: 6
-  Chasing: 0
-  IsAttacking: 0
-  Monster: {fileID: 0}
-  Run: {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
-  Attack: {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
-  Idle: {fileID: 7400000, guid: 0b8e59d3be9956c4da74701ae1064262, type: 2}
-  Die: {fileID: 7400000, guid: 6ce5fa5de2f067548b4d191e6f92c50d, type: 2}
-  Player: {fileID: 173337700}
 --- !u!195 &1272634391
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -614,6 +613,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1272634392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1272634385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8034f161d97c23c41b059c96b08bf3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDead: 0
+  IsDialogDone: 0
+  Chasing: 0
+  IsAttacking: 0
+  MinimumDistance: 2
+  Run: {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
+  Attack: {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
+  Idle: {fileID: 7400000, guid: 0b8e59d3be9956c4da74701ae1064262, type: 2}
+  Die: {fileID: 7400000, guid: 6ce5fa5de2f067548b4d191e6f92c50d, type: 2}
+  Player: {fileID: 173337700}
+  Boss: {fileID: 0}
+  LifeOfBoss: 5
 --- !u!1 &1478489278
 GameObject:
   m_ObjectHideFlags: 0
