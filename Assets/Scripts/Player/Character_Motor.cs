@@ -75,8 +75,9 @@ public class Character_Motor : MonoBehaviour {
             if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
             {
                 Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
-                if (hit.transform.tag == "Ennemy")
+                if (hit.transform.tag.Contains("Ennemy") || hit.transform.tag == "Boss")
                 {
+                    hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(5f);
                     print(hit.transform.name + " detected");
                 }
             }
