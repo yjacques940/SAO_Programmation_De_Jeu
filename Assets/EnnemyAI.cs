@@ -9,6 +9,7 @@ public class EnnemyAI : MonoBehaviour
 {
     public float PlayerDetector = 10f;
     public float MinimumDistance = 6;
+    public int LifeOFMonster = 100;
     public bool Chasing = false;
     public bool IsAttacking = false;
     public NavMeshAgent Monster;
@@ -68,6 +69,16 @@ public class EnnemyAI : MonoBehaviour
             LookPlayer();
             GetComponent<Animation>().CrossFade(Attack.name);
             Chasing = false;
+            IsGettingAttacked(distance);
+        }
+    }
+
+    private void IsGettingAttacked(float distance)
+    {
+        if (distance < MinimumDistance + 3)
+        {
+            LifeOFMonster--;
+            print(LifeOFMonster);
         }
     }
 

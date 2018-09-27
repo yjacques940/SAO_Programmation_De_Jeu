@@ -18,7 +18,7 @@ namespace Assets
         public AnimationClip Die;
         public Transform Player;
         public NavMeshAgent Boss;
-        public int LifeOfBoss = 5;
+        public int LifeOfBoss = 100;
         
 
         void Start()
@@ -100,6 +100,7 @@ namespace Assets
                 LookPlayer();
                 GetComponent<Animation>().CrossFade(Attack.name);
                 Chasing = false;
+                IsGettingAttacked(distance);
             }
         }
 
@@ -109,6 +110,15 @@ namespace Assets
             if(Input.GetAxis("Jump") > 0)
             {
                 IsDialogDone = true;
+            }
+        }
+
+        private void IsGettingAttacked(float distance)
+        {
+            if (distance < MinimumDistance + 3)
+            {
+                LifeOfBoss--;
+                print(LifeOfBoss);
             }
         }
     }
