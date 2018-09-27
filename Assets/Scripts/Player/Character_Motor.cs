@@ -12,12 +12,22 @@ public class Character_Motor : MonoBehaviour {
     public float movingSpeed = 6.0F;
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
+    private CharacterController controller;
 
-    void Start() {}
+    public GameObject rayHit;
+    public float attackCooldown;
+    private bool isAttacking;
+    private float currentCooldown;
+    public float attackRange = 1;
+
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+        rayHit = GameObject.Find("RayHit");
+    }
 
     void Update()
     {
-        CharacterController controller = GetComponent<CharacterController>();
         if (controller.isGrounded)
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -34,11 +44,44 @@ public class Character_Motor : MonoBehaviour {
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
         player.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
-        playerCamera.transform.Rotate(rotateDirection);
+        //playerCamera.transform.Rotate(rotateDirection);
         //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
 
+        if (Input.GetAxis("Fire1") != 0)
+        {
+            Attack();
+        }
 
-        //Fire1 is Left CTRL
+        if (isAttacking)
+        {
+            currentCooldown -= Time.deltaTime;
+        }
+        if (currentCooldown <= 0)
+        {
+            currentCooldown = attackCooldown;
+            isAttacking = false;
+        }
+
+
+        //Fire1 is Left Click
         //Fire3 is left Shift
+    }
+
+    public void Attack()
+    {
+        if (!isAttacking)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
+            {
+                Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
+                if (hit.transform.tag == "Ennemy")
+                {
+                    print(hit.transform.name + " detected");
+                }
+            }
+            isAttacking = true;
+        }
+        
     }
 }
