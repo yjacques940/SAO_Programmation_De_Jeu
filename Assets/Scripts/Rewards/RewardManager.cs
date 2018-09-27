@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class RewardManager : MonoBehaviour {
    
-    [SerializeField] playerTestLoops player;
-    [SerializeField] GameObject loot;
+    [SerializeField] player player;
+    GameObject loot;
 
 
     void Start () {
@@ -19,9 +19,9 @@ public class RewardManager : MonoBehaviour {
         rewardPlayer(15,1, loot);
 	}
 
-    void rewardPlayer(int arg_experience, int arg_skill_points, GameObject arg_loot_item)
+    void rewardPlayer(int experienceRecue, int skillPointsReceived, GameObject itemReceived)
     {    
-        player.ReceiveRewards(arg_experience, arg_skill_points, loot);     
+        player.ReceiveRewards(experienceRecue, skillPointsReceived, itemReceived);     
     }
 
     /*GameObject getPlayer()
