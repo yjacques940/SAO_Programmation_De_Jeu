@@ -4,6 +4,7 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: BackgroundHealth
     21300002: healthBar
+    21300004: ManaBar
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -114,13 +115,33 @@ TextureImporter:
         width: 509
         height: 57
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 12f733ceac4e1f240b4e000ed1fcd18e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ManaBar
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 455
+        width: 509
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 874f62aaaf4f5b843b688037557cda18
       vertices: []
       indices: 
       edges: []

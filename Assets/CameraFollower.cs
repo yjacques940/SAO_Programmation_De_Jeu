@@ -7,7 +7,6 @@ public class CameraFollower : MonoBehaviour
 {
 
     public Camera cameraToLookAt;
-    public Text TextRotation;
 	// Use this for initialization
 	void Start () {
 		
