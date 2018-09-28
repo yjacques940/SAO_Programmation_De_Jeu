@@ -35,14 +35,14 @@ public class EnnemyAI : MonoBehaviour
             Chasing = true;
             FollowPlayer(distance);
             CheckDistance(distance);
-            MonsterHasNoTarget();
         }
         else
         {
             Chasing = false;
             IsAttacking = false;
-            MonsterHasNoTarget();
         }
+        MonsterHasNoTarget();
+        LookPlayer();
     }
 
     private void FollowPlayer(float distance)
@@ -58,7 +58,6 @@ public class EnnemyAI : MonoBehaviour
             {
                 Monster.destination = Player.position + new Vector3(MinimumDistance, 0, 0);
             }
-            LookPlayer();
         }
     }
 
@@ -71,7 +70,6 @@ public class EnnemyAI : MonoBehaviour
                 GetComponent<Animation>().CrossFade(Attack.name);
             }
             IsAttacking = true;
-            LookPlayer();
             Chasing = false;
         }
     }
@@ -98,4 +96,3 @@ public class EnnemyAI : MonoBehaviour
         Monster.transform.LookAt(new Vector3(playerXPosition, 0, playerZPosition));
     }
 }
-

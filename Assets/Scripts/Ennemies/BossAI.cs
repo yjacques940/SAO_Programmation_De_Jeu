@@ -56,7 +56,7 @@ namespace Assets
         public void ApplyDamageOnBoss(int damage)
         {
             LifeOfBoss = LifeOfBoss - damage;
-            if (LifeOfBoss == 0)
+            if (LifeOfBoss <= 0)
             {
                 Dead();
             }

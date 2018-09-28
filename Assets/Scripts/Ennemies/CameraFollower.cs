@@ -9,7 +9,7 @@ public class CameraFollower : MonoBehaviour
     public Camera cameraToLookAt;
 	// Use this for initialization
 	void Start () {
-		
+        //cameraToLookAt = GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
