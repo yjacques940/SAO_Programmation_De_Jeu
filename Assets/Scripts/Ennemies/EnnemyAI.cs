@@ -29,20 +29,23 @@ public class EnnemyAI : MonoBehaviour
 
     void Update()
     {
-        var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
-        if(distance <= PlayerDetector)
+        if (LifeOFMonster > 0)
         {
-            Chasing = true;
-            FollowPlayer(distance);
-            CheckDistance(distance);
+            var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
+            if (distance <= PlayerDetector)
+            {
+                Chasing = true;
+                FollowPlayer(distance);
+                CheckDistance(distance);
+            }
+            else
+            {
+                Chasing = false;
+                IsAttacking = false;
+            }
+            MonsterHasNoTarget();
+            LookPlayer();
         }
-        else
-        {
-            Chasing = false;
-            IsAttacking = false;
-        }
-        MonsterHasNoTarget();
-        LookPlayer();
     }
 
     private void FollowPlayer(float distance)
@@ -76,10 +79,32 @@ public class EnnemyAI : MonoBehaviour
 
     public void IsGettingAttacked(float damage)
     {
-        GetComponent<Animation>().CrossFade(Damage.name);
-        LifeOFMonster -= damage;
-        print(LifeOFMonster);
+        if (LifeOFMonster > 0)
+        {
+            GetComponent<Animation>().CrossFade(Damage.name);
+            LifeOFMonster -= damage;
+            print(LifeOFMonster);
+            if (LifeOFMonster <= 0)
+            {
+                Dies();
+            }
+        }
     }
+
+    private void Dies()
+    {
+        GetComponent<Animation>().CrossFade(Die.name);
+        GiveReward();
+        Destroy(Monster.gameObject, 10);
+    }
+
+    private void GiveReward()
+    {
+        GameObject loot = new GameObject();
+        loot.name = "loops";
+        GetComponent<RewardManager>().rewardPlayer(15, 2, loot);
+    }
+
 
     private void MonsterHasNoTarget()
     {

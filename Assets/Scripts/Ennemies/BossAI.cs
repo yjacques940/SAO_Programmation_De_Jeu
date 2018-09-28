@@ -53,20 +53,19 @@ namespace Assets
             CheckDistance(distance);
         }
 
-        public void ApplyDamageOnBoss(int damage)
-        {
-            LifeOfBoss = LifeOfBoss - damage;
-            if (LifeOfBoss <= 0)
-            {
-                Dead();
-            }
-        }
-
         private void Dead()
         {
             IsDead = true;
             GetComponent<Animation>().CrossFade(Die.name);
+            GiveReward();
             Destroy(Boss.gameObject, 10);
+        }
+
+        private void GiveReward()
+        {
+            GameObject loot = new GameObject();
+            loot.name = "loops";
+            GetComponent<RewardManager>().rewardPlayer(15, 2, loot);
         }
 
         private void FollowPlayer(float distance)
@@ -117,6 +116,10 @@ namespace Assets
             GetComponent<Animation>().CrossFade(Damage.name);
             LifeOfBoss -= damage;
             print(LifeOfBoss);
+            if (LifeOfBoss <= 0)
+            {
+                Dead();
+            }
         }
     }
 }
