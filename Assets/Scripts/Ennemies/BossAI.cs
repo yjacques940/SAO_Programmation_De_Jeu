@@ -14,6 +14,7 @@ namespace Assets
         public float MinimumDistance = 6;
         public AnimationClip Run;
         public AnimationClip Attack;
+        public AnimationClip Damage;
         public AnimationClip Idle;
         public AnimationClip Die;
         public Transform Player;
@@ -100,13 +101,11 @@ namespace Assets
                 LookPlayer();
                 GetComponent<Animation>().CrossFade(Attack.name);
                 Chasing = false;
-                //IsGettingAttacked(distance);
             }
         }
 
         private void DialogWithBossIsDone()
         {
-            //print(Input.GetAxis("Jump"));
             if(Input.GetAxis("Jump") > 0)
             {
                 IsDialogDone = true;
@@ -115,10 +114,9 @@ namespace Assets
 
         public void IsGettingAttacked(float damage)
         {
-            //if (distance < MinimumDistance + 3) {
-                LifeOfBoss -= damage;
-                print(LifeOfBoss);
-            //}
+            GetComponent<Animation>().CrossFade(Damage.name);
+            LifeOfBoss -= damage;
+            print(LifeOfBoss);
         }
     }
 }

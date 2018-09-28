@@ -6,18 +6,18 @@ public class Character_Motor : MonoBehaviour {
 
     private Vector3 rotateDirection = Vector3.zero;
     private Vector3 moveDirection = Vector3.zero;
+    private CharacterController controller;
     [SerializeField] Camera playerCamera;
     [SerializeField] GameObject player;
     public float rotationSpeed = 6.0F;
     public float movingSpeed = 6.0F;
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
-    private CharacterController controller;
 
+    private float currentCooldown;
+    private bool isAttacking;
     public GameObject rayHit;
     public float attackCooldown;
-    private bool isAttacking;
-    private float currentCooldown;
     public float attackRange = 1;
 
     void Start()
@@ -31,16 +31,23 @@ public class Character_Motor : MonoBehaviour {
         if (controller.isGrounded)
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            if (Input.GetAxis("Fire3") > 0) moveDirection[2] *= 2F;
+            if (Input.GetAxis("Fire3") > 0)
+            {
+                moveDirection[2] *= 2F;
+            }
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= movingSpeed;
 
-            rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-            rotateDirection *= rotationSpeed;
-
-            if (Input.GetButton("Jump")) moveDirection.y = jumpSpeed;
+            if (Input.GetButton("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+            }
 
         }
+
+        rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+        rotateDirection *= rotationSpeed;
+
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
         player.transform.Rotate(new Vector3(0, rotateDirection[1], 0));

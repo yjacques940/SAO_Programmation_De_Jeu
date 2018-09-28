@@ -15,6 +15,7 @@ public class EnnemyAI : MonoBehaviour
     public NavMeshAgent Monster;
     public AnimationClip Run;
     public AnimationClip Attack;
+    public AnimationClip Damage;
     public AnimationClip Idle;
     public AnimationClip Die;
     public Transform Player;
@@ -46,9 +47,9 @@ public class EnnemyAI : MonoBehaviour
 
     private void FollowPlayer(float distance)
     {
-        GetComponent<Animation>().CrossFade(Run.name);
         if (distance > MinimumDistance)
         {
+            GetComponent<Animation>().CrossFade(Run.name);
             if (Monster.transform.position.x > 0)
             {
                 Monster.destination = Player.position - new Vector3(MinimumDistance, 0, 0);
@@ -65,20 +66,21 @@ public class EnnemyAI : MonoBehaviour
     {
         if (distance <= MinimumDistance + 1)
         {
+            if (!GetComponent<Animation>().IsPlaying("Damage") && !GetComponent<Animation>().IsPlaying("Attack"))
+            {
+                GetComponent<Animation>().CrossFade(Attack.name);
+            }
             IsAttacking = true;
             LookPlayer();
-            GetComponent<Animation>().CrossFade(Attack.name);
             Chasing = false;
-            //IsGettingAttacked(distance);
         }
     }
 
     public void IsGettingAttacked(float damage)
     {
-        //if (distance < MinimumDistance + 3) {
-            LifeOFMonster -= damage;
-            print(LifeOFMonster);
-        //}
+        GetComponent<Animation>().CrossFade(Damage.name);
+        LifeOFMonster -= damage;
+        print(LifeOFMonster);
     }
 
     private void MonsterHasNoTarget()
