@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character_Motor : MonoBehaviour {
 
@@ -19,11 +20,15 @@ public class Character_Motor : MonoBehaviour {
     public GameObject rayHit;
     public float attackCooldown;
     public float attackRange = 1;
+    public Image HealthBar;
+    public float MaxHealth = 200;
+    public float CurrentHealth;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         rayHit = GameObject.Find("RayHit");
+        CurrentHealth = MaxHealth;
     }
 
     void Update()
@@ -91,5 +96,19 @@ public class Character_Motor : MonoBehaviour {
             isAttacking = true;
         }
         
+    }
+
+    public void IsGettingAttacked(float damage)
+    {
+        if (CurrentHealth > 0)
+        {
+            CurrentHealth -= damage;
+            print("PLAYEER" + CurrentHealth);
+            HealthBar.fillAmount = CurrentHealth / MaxHealth;
+            if (CurrentHealth <= 0)
+            {
+               // Dies();
+            }
+        }
     }
 }
