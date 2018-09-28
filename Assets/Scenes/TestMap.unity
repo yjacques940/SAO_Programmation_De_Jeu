@@ -113,6 +113,22 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 29ef4f313605106409f3ae6eb59b1271, type: 2}
+--- !u!1 &27813551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1894276324233170, guid: c5f1adbbe12c6a145aa6177e5cfcfb4f,
+    type: 2}
+  m_PrefabInternal: {fileID: 49693178}
+--- !u!114 &27813552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 27813551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a10ebed289e16314caf93327cce0cd9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &49693178
 Prefab:
   m_ObjectHideFlags: 0
@@ -295,6 +311,47 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 502410491}
   m_CullTransparentMesh: 0
+--- !u!1 &516006880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 516006882}
+  - component: {fileID: 516006881}
+  m_Layer: 0
+  m_Name: RewardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &516006881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 516006880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db171f7d49929b4490fd33dd594c3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 27813552}
+--- !u!4 &516006882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 516006880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 177.24426, y: 1.090494, z: 247.88515}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &516147516
 Prefab:
   m_ObjectHideFlags: 0
@@ -733,6 +790,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1008501171635670, guid: f0c0e688e93ef884a8b347f52af41ee5, type: 2}
+      propertyPath: m_Name
+      value: map_test
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0c0e688e93ef884a8b347f52af41ee5, type: 2}
   m_IsPrefabAsset: 0
@@ -890,22 +951,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1272634385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8034f161d97c23c41b059c96b08bf3c9, type: 3}
+  m_Script: {fileID: 11500000, guid: f815c8628819e854882bed4a40facd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDead: 0
-  IsDialogDone: 0
-  Chasing: 0
+  PlayerDetector: 10
+  MinimumDistance: 3
+  LifeOFMonster: 100
+  Chasing: 1
   IsAttacking: 0
-  MinimumDistance: 2
+  Monster: {fileID: 0}
   Run: {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
   Attack: {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
   Damage: {fileID: 7400000, guid: ceef6f883ed4525408dd849615e6bcd6, type: 2}
   Idle: {fileID: 7400000, guid: 0b8e59d3be9956c4da74701ae1064262, type: 2}
   Die: {fileID: 7400000, guid: 6ce5fa5de2f067548b4d191e6f92c50d, type: 2}
   Player: {fileID: 1238567260}
-  Boss: {fileID: 0}
-  LifeOfBoss: 5
 --- !u!1 &1297353013
 GameObject:
   m_ObjectHideFlags: 0
