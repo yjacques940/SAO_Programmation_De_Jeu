@@ -7,9 +7,12 @@ using System;
 
 public class EnnemyAI : MonoBehaviour
 {
+    private float currentCooldown;
+    public float attackCooldown;
     public float PlayerDetector = 10f;
     public float MinimumDistance = 6;
-    public float LifeOFMonster = 100f;
+    public float CurrentLifeOFMonster;
+    public float MaxLifeOFMonster = 100;
     public bool Chasing = false;
     public bool IsAttacking = false;
     public NavMeshAgent Monster;
@@ -19,17 +22,20 @@ public class EnnemyAI : MonoBehaviour
     public AnimationClip Idle;
     public AnimationClip Die;
     public Transform Player;
+    public Image HealthBar;
+    public GameObject RayHit;
     
 
     void Start()
     {
         Monster = gameObject.GetComponent<NavMeshAgent>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
+        CurrentLifeOFMonster = MaxLifeOFMonster;
     }
 
     void Update()
     {
-        if (LifeOFMonster > 0)
+        if (CurrentLifeOFMonster > 0)
         {
             var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
             if (distance <= PlayerDetector)
@@ -72,6 +78,36 @@ public class EnnemyAI : MonoBehaviour
             {
                 GetComponent<Animation>().CrossFade(Attack.name);
             }
+            AttackPlayer();
+            if (IsAttacking)
+            {
+                currentCooldown -= Time.deltaTime;
+            }
+            if (currentCooldown <= 0)
+            {
+                currentCooldown = attackCooldown;
+                IsAttacking = false;
+            }
+        }
+    }
+
+    private void AttackPlayer()
+    {
+        if (!IsAttacking)
+        {
+            print("test2");
+            RaycastHit hit;
+            Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 1), Color.red,3);
+            if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, 1))
+            {
+                print("test3");
+               
+                if (hit.transform.tag.Contains("Player"))
+                {
+                    hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(5f);
+                    print(hit.transform.name + " detected");
+                }
+            }
             IsAttacking = true;
             Chasing = false;
         }
@@ -79,15 +115,16 @@ public class EnnemyAI : MonoBehaviour
 
     public void IsGettingAttacked(float damage)
     {
-        if (LifeOFMonster > 0)
+        if (CurrentLifeOFMonster > 0)
         {
             GetComponent<Animation>().CrossFade(Damage.name);
-            LifeOFMonster -= damage;
-            print(LifeOFMonster);
-            if (LifeOFMonster <= 0)
-            {
-                Dies();
-            }
+            CurrentLifeOFMonster -= damage;
+            print(CurrentLifeOFMonster);
+            HealthBar.fillAmount = CurrentLifeOFMonster / MaxLifeOFMonster;
+        }
+        else
+        {
+            Dies();
         }
     }
 
@@ -102,9 +139,8 @@ public class EnnemyAI : MonoBehaviour
     {
         GameObject loot = new GameObject();
         loot.name = "loops";
-        GetComponent<RewardManager>().rewardPlayer(15, 2, loot);
+    //    GetComponent<RewardManager>().rewardPlayer(15, 2, loot);
     }
-
 
     private void MonsterHasNoTarget()
     {
