@@ -95,7 +95,6 @@ public class Character_Motor : MonoBehaviour {
             }
             isAttacking = true;
         }
-        
     }
 
     public void IsGettingAttacked(float damage)
@@ -103,12 +102,12 @@ public class Character_Motor : MonoBehaviour {
         if (CurrentHealth > 0)
         {
             CurrentHealth -= damage;
-            print("PLAYEER" + CurrentHealth);
+            print("PLAYEER HEALTH FOR BAR" + CurrentHealth / MaxHealth);
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
-            if (CurrentHealth <= 0)
-            {
-               // Dies();
-            }
+        }
+        else
+        {
+            //Dies();
         }
     }
 }

@@ -31,7 +31,6 @@ public class EnnemyAI : MonoBehaviour
         Monster = gameObject.GetComponent<NavMeshAgent>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         CurrentLifeOFMonster = MaxLifeOFMonster;
-        RayHit = GameObject.Find("RayHit");
     }
 
     void Update()
@@ -96,10 +95,13 @@ public class EnnemyAI : MonoBehaviour
     {
         if (!IsAttacking)
         {
+            print("test2");
             RaycastHit hit;
+            Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 1), Color.red,3);
             if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, 1))
             {
-                Debug.DrawLine(RayHit.transform.position, hit.point, Color.red);
+                print("test3");
+               
                 if (hit.transform.tag.Contains("Player"))
                 {
                     hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(5f);
@@ -119,10 +121,10 @@ public class EnnemyAI : MonoBehaviour
             CurrentLifeOFMonster -= damage;
             print(CurrentLifeOFMonster);
             HealthBar.fillAmount = CurrentLifeOFMonster / MaxLifeOFMonster;
-            if (CurrentLifeOFMonster <= 0)
-            {
-                Dies();
-            }
+        }
+        else
+        {
+            Dies();
         }
     }
 
@@ -139,7 +141,6 @@ public class EnnemyAI : MonoBehaviour
         loot.name = "loops";
     //    GetComponent<RewardManager>().rewardPlayer(15, 2, loot);
     }
-
 
     private void MonsterHasNoTarget()
     {

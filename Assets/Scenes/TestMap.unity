@@ -403,6 +403,16 @@ Prefab:
       propertyPath: Player
       value: 
       objectReference: {fileID: 1238567260}
+    - target: {fileID: 114599778614656490, guid: 8edb2fa3dc2112246b53357be701f37b,
+        type: 2}
+      propertyPath: Monster
+      value: 
+      objectReference: {fileID: 1756201276}
+    - target: {fileID: 114599778614656490, guid: 8edb2fa3dc2112246b53357be701f37b,
+        type: 2}
+      propertyPath: attackCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8edb2fa3dc2112246b53357be701f37b, type: 2}
   m_IsPrefabAsset: 0
@@ -673,7 +683,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 4, z: 4}
+  m_Size: {x: 3.5, y: 4, z: 3.5}
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!54 &1272634387
 Rigidbody:
@@ -727,14 +737,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f815c8628819e854882bed4a40facd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 1
+  attackCooldown: 0.5
   PlayerDetector: 10
   MinimumDistance: 3
   CurrentLifeOFMonster: 0
   MaxLifeOFMonster: 100
   Chasing: 1
   IsAttacking: 0
-  Monster: {fileID: 0}
+  Monster: {fileID: 1272634391}
   Run: {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
   Attack: {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
   Damage: {fileID: 7400000, guid: ceef6f883ed4525408dd849615e6bcd6, type: 2}
@@ -765,7 +775,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1294626434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.07, z: 1.74}
+  m_LocalPosition: {x: 0, y: 2.07, z: 1.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1272634389}
@@ -1109,6 +1119,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!195 &1756201276 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 195394551282451036, guid: 8edb2fa3dc2112246b53357be701f37b,
+    type: 2}
+  m_PrefabInternal: {fileID: 543186766}
 --- !u!1 &1811399479
 GameObject:
   m_ObjectHideFlags: 0
