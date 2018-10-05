@@ -7,6 +7,7 @@ public class player : MonoBehaviour {
     int experience;
     int skillpoints;
     int level;
+    public GameObject sword;
 	// Use this for initialization
 	void Start () {
 		
@@ -14,7 +15,7 @@ public class player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        //EquipWeapon();
 	}
 
     public void ReceiveRewards(int experienceReceived,int skillPointsReceived, GameObject itemReceived)
@@ -39,4 +40,12 @@ public class player : MonoBehaviour {
         //complete when inventory system is defined
         print(itemReceived.name);
     }
+
+    /*void EquipWeapon()
+    {
+        Transform item;
+        item = this.gameObject.transform.GetChild(5);
+        Instantiate(sword,im);
+        print(item.name);
+    }*/
 }
