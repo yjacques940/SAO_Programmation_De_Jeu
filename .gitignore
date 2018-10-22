@@ -34,11 +34,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-
-Assets/MORPH3D/
-
-Assets/Prefabs/Players/MalePlayer\.prefab
-
-Assets/Prefabs/
-
-Assets/MORPH3D\.meta
