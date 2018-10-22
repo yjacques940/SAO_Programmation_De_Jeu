@@ -104,7 +104,7 @@ public class EnnemyAI : MonoBehaviour
                
                 if (hit.transform.tag.Contains("Player"))
                 {
-                    hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(5f);
+                    hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(20f);
                     print(hit.transform.name + " detected");
                 }
             }
