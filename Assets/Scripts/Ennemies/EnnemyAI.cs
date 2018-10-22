@@ -8,6 +8,7 @@ using System;
 public class EnnemyAI : MonoBehaviour
 {
     private float currentCooldown;
+    private bool isDead = false;
     public float attackCooldown;
     public float PlayerDetector = 10f;
     public float MinimumDistance = 6;
@@ -131,12 +132,16 @@ public class EnnemyAI : MonoBehaviour
         }
         else
         {
-            Dies();
+            if (!isDead)
+            {
+                Dies();
+            }
         }
     }
 
     private void Dies()
     {
+        isDead = true;
         GetComponent<Animation>().CrossFade(Die.name);
         GiveReward();
         Destroy(Monster.gameObject, 10);
