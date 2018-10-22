@@ -7,6 +7,8 @@ public class Character_Motor : MonoBehaviour {
 
     private Vector3 rotateDirection = Vector3.zero;
     private Vector3 moveDirection = Vector3.zero;
+    private float currentCooldown;
+    private bool isAttacking;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
     [SerializeField] GameObject player;
@@ -15,8 +17,7 @@ public class Character_Motor : MonoBehaviour {
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
 
-    private float currentCooldown;
-    private bool isAttacking;
+    public Animator anim;
     public GameObject rayHit;
     public float attackCooldown;
     public float attackRange = 1;
@@ -29,16 +30,23 @@ public class Character_Motor : MonoBehaviour {
         controller = GetComponent<CharacterController>();
         rayHit = GameObject.Find("RayHit");
         CurrentHealth = MaxHealth;
+        anim = GetComponent<Animator>();
+
     }
 
     void Update()
     {
         if (controller.isGrounded)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                anim.Play("");
+            }
+             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             if (Input.GetAxis("Fire3") > 0)
             {
                 moveDirection[2] *= 2F;
+
             }
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= movingSpeed;
