@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,9 @@ public class Character_Motor : MonoBehaviour {
     private Vector3 moveDirection = Vector3.zero;
     private float currentCooldown;
     private bool isAttacking;
+    private float inputH;
+    private float inputV;
+    private bool dead = false;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
     [SerializeField] GameObject player;
@@ -38,11 +43,12 @@ public class Character_Motor : MonoBehaviour {
     {
         if (controller.isGrounded)
         {
-            if (Input.GetAxis("Horizontal") > 0)
-            {
-                anim.Play("");
-            }
-             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            inputH = Input.GetAxis("Horizontal")*2;
+            inputV = Input.GetAxis("Vertical") *2;
+            anim.SetFloat("inputH",inputH);
+            anim.SetFloat("inputV",inputV);
+
+             moveDirection = new Vector3(inputH*20f*Time.deltaTime, 0, inputV*50f*Time.deltaTime);
             if (Input.GetAxis("Fire3") > 0)
             {
                 moveDirection[2] *= 2F;
@@ -53,7 +59,17 @@ public class Character_Motor : MonoBehaviour {
 
             if (Input.GetButton("Jump"))
             {
-                moveDirection.y = jumpSpeed;
+                anim.SetBool("jump", true);
+                moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
+                if (moveDirection.y == 0 && inputV > 0)
+                {
+                    anim.SetFloat("inputH", inputH);
+                    anim.SetFloat("inputV", inputV);
+                }
+            }
+            else
+            {
+                anim.SetBool("jump",false);
             }
 
         }
@@ -109,13 +125,23 @@ public class Character_Motor : MonoBehaviour {
     {
         if (CurrentHealth > 0)
         {
+            anim.Play("DAMAGED00",-1,0f);
             CurrentHealth -= damage;
             print("PLAYEER HEALTH FOR BAR" + CurrentHealth / MaxHealth);
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
         }
         else
         {
-            //Dies();
+            if (!dead)
+            {
+                dead = true;
+                anim.Play("DAMAGED01", -1, 0f);
+            }
         }
+    }
+
+    public bool IsDead()
+    {
+        return dead;
     }
 }
