@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee9c35122abd23458ddb18edd496d6a, type: 3}
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 114519844520485336, guid: 9b916cfc51787f845b2f1cee45dac0c3, type: 2}
   rarities:
   - {fileID: 11400000, guid: 5266c700ca2f2084bad5c5469aaf3dae, type: 2}
   - {fileID: 11400000, guid: 62c810e06018a2c4a9b0e6601d8e4aac, type: 2}
@@ -20,8 +21,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af3844280a512d44f93868cd59df35d1, type: 2}
   - {fileID: 11400000, guid: ba433017cdb548145aeb623624582878, type: 2}
   - {fileID: 11400000, guid: 568d7b758b2009b4d9a155ec10449a06, type: 2}
-  statDefinitions: []
-  equipmentTypes: []
+  statDefinitions:
+  - {fileID: 11400000, guid: d616c25fe152ae2468b3c881fb0e27ca, type: 2}
+  equipmentTypes:
+  - {fileID: 11400000, guid: 96d00c5965f625e40b662b751dd31877, type: 2}
   craftingCategories: []
   currencies:
   - {fileID: 11400000, guid: 8d4d035459ccb7b448fdbf47efe03083, type: 2}
