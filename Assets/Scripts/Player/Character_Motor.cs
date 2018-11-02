@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.Collections.LowLevel.Unsafe;
+using Devdog.InventoryPro;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -87,6 +89,22 @@ public class Character_Motor : MonoBehaviour {
         {
             Attack();
         }
+
+        //if (Input.GetKey("E") == true)
+        //{
+            //var equipSlot = equippableItem.GetBestEquipSlot(characterCollection);
+            //if (equipSlot == null)
+            //    return; // can't equip, no slots found.
+
+            //characterCollection.EquipItem(equipSlot, equippableItem); // Equip the item to the character collection. 
+
+            //// OR 
+            //var bestEquipSlot = equippableItem.GetBestEquipSlot(characterCollection);
+            //if (bestEquipSlot == null)
+            //    return;
+
+            //equippableItem.Equip(bestEquipSlot);
+        //}
 
         if (isAttacking)
         {

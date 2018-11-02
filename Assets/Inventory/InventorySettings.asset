@@ -32,9 +32,9 @@ MonoBehaviour:
     hotspot: {x: 0, y: 0}
     cursorMode: 0
   itemTriggerMouseClick: 1
-  itemTriggerUseKeyCode: 0
+  itemTriggerUseKeyCode: 32
   alwaysTriggerGoldItemPickupOnPlayerCollision: 0
-  itemTriggerOnPlayerCollision: 0
+  itemTriggerOnPlayerCollision: 1
   itemTriggerPickupSprite: {fileID: 0}
   useUnstackClick: 1
   useUnstackDrag: 1
