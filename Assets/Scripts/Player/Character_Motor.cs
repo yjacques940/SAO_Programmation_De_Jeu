@@ -127,7 +127,6 @@ public class Character_Motor : MonoBehaviour {
         {
             anim.Play("DAMAGED00",-1,0f);
             CurrentHealth -= damage;
-            print("PLAYEER HEALTH FOR BAR" + CurrentHealth / MaxHealth);
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
         }
         else

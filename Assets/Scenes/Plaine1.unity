@@ -290,6 +290,54 @@ Prefab:
       propertyPath: m_LocalRotation.z
       value: -0.017708752
       objectReference: {fileID: 0}
+    - target: {fileID: 54414193166185168, guid: cee6e1855c7cb094b8e6751be7ec69ff,
+        type: 2}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891029904090158, guid: cee6e1855c7cb094b8e6751be7ec69ff,
+        type: 2}
+      propertyPath: movingSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891029904090158, guid: cee6e1855c7cb094b8e6751be7ec69ff,
+        type: 2}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 95761633570799538, guid: cee6e1855c7cb094b8e6751be7ec69ff,
+        type: 2}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.16720483
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.009171664
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.001555912
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.9858783
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.15118408
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.3758051
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331687505695386, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3.1170654
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cee6e1855c7cb094b8e6751be7ec69ff, type: 2}
   m_IsPrefabAsset: 0
