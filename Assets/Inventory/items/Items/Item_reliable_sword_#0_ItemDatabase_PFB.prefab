@@ -41,8 +41,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1223896880783984}
-  m_LocalRotation: {x: -0.08717198, y: 0.89959055, z: -0.21045256, w: -0.37262264}
-  m_LocalPosition: {x: 179.59, y: 2.506, z: 248.163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7740149, y: 1.1338844, z: 1.1746393}
   m_Children: []
   m_Father: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9eef25c6bb8754899dc81ec4bd6344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useWhenPlayerComesInRange: 0
+  useWhenPlayerComesInRange: 1
   blockPlayerInput: 0
   itemPrefab: {fileID: 114519844520485336}
 --- !u!114 &114519844520485336
@@ -192,8 +192,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   equipVisually: 1
-  _equipmentPosition: {x: 0, y: 0, z: 0}
-  _equipmentRotation: {x: 0, y: 0, z: 0, w: 0}
+  _equipmentPosition: {x: 0.03, y: 0.0049, z: -0.016}
+  _equipmentRotation: {x: 0.046828818, y: -0.8401821, z: 0.535255, w: 0.07350652}
 --- !u!114 &114654200607958140
 MonoBehaviour:
   m_ObjectHideFlags: 1
