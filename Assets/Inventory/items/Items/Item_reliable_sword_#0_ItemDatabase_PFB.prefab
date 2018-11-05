@@ -192,8 +192,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   equipVisually: 1
-  _equipmentPosition: {x: 0.03, y: 0.0049, z: -0.016}
-  _equipmentRotation: {x: 0.046828818, y: -0.8401821, z: 0.535255, w: 0.07350652}
+  _equipmentPosition: {x: 0, y: 0, z: 0}
+  _equipmentRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &114654200607958140
 MonoBehaviour:
   m_ObjectHideFlags: 1

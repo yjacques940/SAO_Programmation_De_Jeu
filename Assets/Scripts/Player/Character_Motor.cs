@@ -15,6 +15,7 @@ public class Character_Motor : MonoBehaviour {
     private bool isAttacking;
     private float inputH;
     private float inputV;
+    private float myAng = 0;
     private bool dead = false;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
@@ -41,6 +42,11 @@ public class Character_Motor : MonoBehaviour {
 
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        myAng = Vector3.Angle(Vector3.up, hit.normal); //Calc angle between normal and character
+    }
+
     void Update()
     {
         if (controller.isGrounded)
@@ -59,7 +65,7 @@ public class Character_Motor : MonoBehaviour {
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= movingSpeed;
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButton("Jump") && myAng < 45)
             {
                 anim.SetBool("jump", true);
                 moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
