@@ -131,6 +131,7 @@ public class Character_Motor : MonoBehaviour {
     {
         if (!isAttacking)
         {
+            anim.Play("Attack");
             RaycastHit hit;
             if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
             {
