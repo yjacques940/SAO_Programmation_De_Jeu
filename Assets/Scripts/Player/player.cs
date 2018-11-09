@@ -44,8 +44,10 @@ public class player : MonoBehaviour {
     
     void equipWeapon()
     {
-        weapon.transform.position = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.position;
-        weapon.transform.parent = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform;
+        GameObject weaponEquipped;
+        weaponEquipped = Instantiate(Resources.Load("Weapons/RPG Swords/" + weapon.name)) as GameObject;
+        weaponEquipped.transform.position = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.position;
+        weaponEquipped.transform.parent = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform;
     }
 
 
