@@ -8,6 +8,8 @@ TagManager:
   - AggressiveEnnemy
   - PassiveEnnemy
   - Boss
+  - Weapon
+  - PlayerWeaponHand
   layers:
   - Default
   - TransparentFX

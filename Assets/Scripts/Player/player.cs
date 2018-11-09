@@ -7,15 +7,17 @@ public class player : MonoBehaviour {
     int experience;
     int skillpoints;
     int level;
+    [SerializeField] Weapon weapon;
+
 	// Use this for initialization
 	void Start () {
-		
+        equipWeapon();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+       
+    }
 
     public void ReceiveRewards(int experienceReceived,int skillPointsReceived, GameObject itemReceived)
     {
@@ -39,4 +41,12 @@ public class player : MonoBehaviour {
         //complete when inventory system is defined
         print(itemReceived.name);
     }
+    
+    void equipWeapon()
+    {
+        weapon.transform.position = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.position;
+        weapon.transform.parent = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform;
+    }
+
+
 }

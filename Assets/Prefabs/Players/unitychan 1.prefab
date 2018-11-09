@@ -1097,8 +1097,7 @@ GameObject:
   - component: {fileID: 136161431294193492}
   - component: {fileID: 114497680951580622}
   - component: {fileID: 114578069374785678}
-  - component: {fileID: 114676460863079468}
-  - component: {fileID: 114995550883879920}
+  - component: {fileID: 114155326626701954}
   m_Layer: 0
   m_Name: unitychan 1
   m_TagString: Player
@@ -1561,6 +1560,21 @@ GameObject:
   - component: {fileID: 137194183422411722}
   m_Layer: 0
   m_Name: shirts_sode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1618860196687988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4528506646210132}
+  m_Layer: 0
+  m_Name: weaponHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3925,6 +3939,19 @@ Transform:
   m_Father: {fileID: 4803022445910442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4528506646210132
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1618860196687988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4676693227021000}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4528509085098242
 Transform:
   m_ObjectHideFlags: 1
@@ -4354,6 +4381,7 @@ Transform:
   - {fileID: 4671869297327134}
   - {fileID: 4010310506596994}
   - {fileID: 224020549142146134}
+  - {fileID: 4528506646210132}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5372,6 +5400,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 1
+--- !u!114 &114155326626701954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1400584954511040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969b4628f00612c40bd9089989a20874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerSelector: {fileID: 0}
 --- !u!114 &114214292332733946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5525,18 +5565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10ebed289e16314caf93327cce0cd9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114676460863079468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1400584954511040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 969b4628f00612c40bd9089989a20874, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerSelector: {fileID: 0}
+  weapon: {fileID: 0}
 --- !u!114 &114849997549782462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5571,37 +5600,6 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Statistiques: \nNiveau: 621\nForce: 14\nAgilit\xE9: 18\nPoints de comp\xE9tence:
     7"
---- !u!114 &114995550883879920
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1400584954511040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7be11717ae404fb48aae52a1f9baeaaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterUI: {fileID: 0}
-  _inventoryCollections:
-  - {fileID: 0}
-  _skillbarCollection: {fileID: 0}
-  dynamicallyFindUIElements: 1
-  characterCollectionName: Character
-  inventoryCollectionNames:
-  - Inventory
-  skillbarCollectionName: Skillbar
-  _equipmentBinders:
-  - equippableSlot: {fileID: 0}
-    findDynamic: 1
-    equipTransformPath: 
-    equipTransform: {fileID: 0}
-    rootBone: {fileID: 4041381430004596}
-  isPlayerDynamicallyInstantiated: 0
-  dontDestroyOnLoad: 1
-  _deathDropObjectPrefab: {fileID: 0}
-  _equipmentHandler: {fileID: 11400000, guid: fcd72d5a988613d4e9f518dbe4cd0a5d, type: 2}
-  _waitFramesBeforeInit: 0
 --- !u!136 &136161431294193492
 CapsuleCollider:
   m_ObjectHideFlags: 1

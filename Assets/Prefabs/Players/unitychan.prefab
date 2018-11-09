@@ -257,6 +257,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1099541770183928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4115969353305514}
+  m_Layer: 0
+  m_Name: weaponHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1099849183869228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1252,21 @@ GameObject:
   - component: {fileID: 23426858377782972}
   m_Layer: 0
   m_Name: head_back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1477950734275910
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4741027700977548}
+  m_Layer: 0
+  m_Name: EquipRightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2254,6 +2284,8 @@ GameObject:
   - component: {fileID: 143651573786057596}
   - component: {fileID: 136617365732776144}
   - component: {fileID: 114314895858751078}
+  - component: {fileID: 114459771332868452}
+  - component: {fileID: 114693501735386272}
   m_Layer: 0
   m_Name: unitychan
   m_TagString: Player
@@ -2377,6 +2409,7 @@ GameObject:
   - component: {fileID: 4949669692350832}
   - component: {fileID: 20750825068966862}
   - component: {fileID: 81646979140378900}
+  - component: {fileID: 114354961439814156}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -2869,6 +2902,7 @@ Transform:
   - {fileID: 4267852348962226}
   - {fileID: 4572938908090918}
   - {fileID: 4101855762870900}
+  - {fileID: 4741027700977548}
   m_Father: {fileID: 4459365703505844}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2884,6 +2918,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4401272925730008}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4115969353305514
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1099541770183928}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.557, y: 1.153, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4731926392357316}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4120205234272940
 Transform:
@@ -4325,7 +4372,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1894276324233170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 177.10033, y: 0, z: 246.24554}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4169782334125158}
@@ -4333,6 +4380,7 @@ Transform:
   - {fileID: 4128999217288202}
   - {fileID: 4617539984483056}
   - {fileID: 4170842563724706}
+  - {fileID: 4115969353305514}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4362,6 +4410,19 @@ Transform:
   - {fileID: 4846927888177326}
   m_Father: {fileID: 4101855762870900}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4741027700977548
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477950734275910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.132, y: 0.065, z: 0.037}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4104385520888752}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4766815790597960
 Transform:
@@ -5210,9 +5271,126 @@ MonoBehaviour:
   movingSpeed: 6
   jumpSpeed: 8
   gravity: 20
+  anim: {fileID: 0}
   rayHit: {fileID: 1582562875048220}
   attackCooldown: 0.5
   attackRange: 3
+  HealthBar: {fileID: 0}
+  MaxHealth: 200
+  CurrentHealth: 0
+--- !u!114 &114354961439814156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928714078781650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -768656878, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_MaxRayIntersections: 0
+--- !u!114 &114459771332868452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894276324233170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be11717ae404fb48aae52a1f9baeaaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterUI: {fileID: 0}
+  _inventoryCollections:
+  - {fileID: 0}
+  _skillbarCollection: {fileID: 0}
+  dynamicallyFindUIElements: 0
+  characterCollectionName: Character
+  inventoryCollectionNames:
+  - Inventory
+  skillbarCollectionName: Skillbar
+  _equipmentBinders:
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 1
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 4782627522801586}
+  - equippableSlot: {fileID: 0}
+    findDynamic: 0
+    equipTransformPath: 
+    equipTransform: {fileID: 0}
+    rootBone: {fileID: 0}
+  isPlayerDynamicallyInstantiated: 0
+  dontDestroyOnLoad: 1
+  _deathDropObjectPrefab: {fileID: 0}
+  _equipmentHandler: {fileID: 11400000, guid: fcd72d5a988613d4e9f518dbe4cd0a5d, type: 2}
+  _waitFramesBeforeInit: 0
+--- !u!114 &114693501735386272
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894276324233170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969b4628f00612c40bd9089989a20874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerSelector: {fileID: 11400000, guid: f35edfcfad3df2a4588d7d12217dd463, type: 2}
 --- !u!136 &136617365732776144
 CapsuleCollider:
   m_ObjectHideFlags: 1

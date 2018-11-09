@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23289451418145050}
   - component: {fileID: 111111854165787534}
   - component: {fileID: 54780920059553698}
+  - component: {fileID: 114934596632543956}
   m_Layer: 0
   m_Name: cutter01
   m_TagString: Weapon
@@ -114,3 +115,15 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114934596632543956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1266822850373170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4182b212c8e52f644ad1ed4aac0c01f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
