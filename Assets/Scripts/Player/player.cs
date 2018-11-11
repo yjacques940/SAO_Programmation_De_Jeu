@@ -6,7 +6,49 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class player : MonoBehaviour {
+    // Use this for initialization
+    void Start () {
+        controller = GetComponent<CharacterController>();
+        rayHit = GameObject.Find("RayHit");
+        CurrentHealth = MaxHealth;
+        anim = GetComponent<Animator>();
+        equipWeapon();
+	}
+	
+    public void ReceiveRewards(int experienceReceived,int skillPointsReceived, GameObject itemReceived)
+    {
+        ReceiveExperiencePoints(experienceReceived);
+        ReceiveSkillPoints(skillPointsReceived);
+        AddItemToInventory(itemReceived);
+    }
+
+    void ReceiveExperiencePoints(int experienceReceived)
+    {
+        experience += experienceReceived;
+    }
+
+    void ReceiveSkillPoints(int skillPointsReceived)
+    {
+        skillpoints += skillPointsReceived;
+    }
+
+    void AddItemToInventory(GameObject itemReceived)
+    {
+        //complete when inventory system is defined
+        print(itemReceived.name);
+    }
+    
+    void equipWeapon()
+    {
+        GameObject weaponEquipped;
+        weaponEquipped = Instantiate(Resources.Load("Weapons/RPG Swords/" + weapon.name)) as GameObject;
+        weaponEquipped.transform.position = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.position;
+        weaponEquipped.transform.parent = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform;
+    }
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        myAng = Vector3.Angle(Vector3.up, hit.normal); //Calc angle between normal and character
+    }
 
     int experience;
     int skillpoints;
@@ -51,17 +93,49 @@ public class player : MonoBehaviour {
         AddItemToInventory(itemReceived);
     }
 
-    void ReceiveExperiencePoints(int experienceReceived)
+    public void Attack()
     {
-        experience += experienceReceived;
+        if (!isAttacking)
+        {
+            anim.Play("Attack");
+            RaycastHit hit;
+            if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
+            {
+                Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
+                if (hit.transform.tag.Contains("Ennemy") || hit.transform.tag == "Boss")
+                {
+                    float attackDamage = baseAttackDamage;
+                    if(weapon)
+                    {
+                        attackDamage += weapon.Damage;
+                    }
+                    hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
+                    print(hit.transform.name + " detected");
+                }
+            }
+            isAttacking = true;
+        }
     }
 
-    void ReceiveSkillPoints(int skillPointsReceived)
+    public void IsGettingAttacked(float damage)
     {
-        skillpoints += skillPointsReceived;
+        if (CurrentHealth > 0)
+        {
+            anim.Play("DAMAGED00", -1, 0f);
+            CurrentHealth -= damage;
+            HealthBar.fillAmount = CurrentHealth / MaxHealth;
+        }
+        else
+        {
+            if (!dead)
+            {
+                dead = true;
+                anim.Play("DAMAGED01", -1, 0f);
+            }
+        }
     }
 
-    void AddItemToInventory(GameObject itemReceived)
+    public bool IsDead()
     {
         //complete when inventory system is defined
         print(itemReceived.name);
