@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class CameraFollower : MonoBehaviour
 {
 
-    public Camera cameraToLookAt;
+    GameObject cameraToLookAt;
 	// Use this for initialization
 	void Start () {
-        //cameraToLookAt = GetComponent<Camera>();
+        cameraToLookAt = GameObject.FindGameObjectWithTag("MainCamera");
 	}
 	
 	// Update is called once per frame
