@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33907916050210784}
   - component: {fileID: 23525783811643374}
   - component: {fileID: 111994998699563448}
+  - component: {fileID: 114846596571183260}
   m_Layer: 0
   m_Name: WeaponSword003
   m_TagString: Untagged
@@ -98,3 +99,15 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114846596571183260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1770086238945920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4182b212c8e52f644ad1ed4aac0c01f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
