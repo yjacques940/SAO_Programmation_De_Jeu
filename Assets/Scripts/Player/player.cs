@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.Collections.LowLevel.Unsafe;
-using Devdog.InventoryPro;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +22,6 @@ public class player : MonoBehaviour {
     private bool dead = false;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
-    //[SerializeField] GameObject player;
     public float rotationSpeed = 6.0F;
     public float movingSpeed = 6.0F;
     public float jumpSpeed = 8.0F;
@@ -83,7 +81,7 @@ public class player : MonoBehaviour {
 
     void Update()
     {
-        if (controller.isGrounded)
+        if (controller.isGrounded && CurrentHealth>0)
         {
             inputH = Input.GetAxis("Horizontal") * 2;
             inputV = Input.GetAxis("Vertical") * 2;
@@ -125,7 +123,7 @@ public class player : MonoBehaviour {
         //playerCamera.transform.Rotate(rotateDirection);
         //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
 
-        if (Input.GetAxis("Fire1") != 0)
+        if (Input.GetAxis("Fire1") != 0 && CurrentHealth > 0)
         {
             Attack();
         }
