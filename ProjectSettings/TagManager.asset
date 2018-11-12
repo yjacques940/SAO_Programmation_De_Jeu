@@ -10,6 +10,8 @@ TagManager:
   - Boss
   - Weapon
   - PlayerWeaponHand
+  - SpawnPoint
+  - BossSpawnPoint
   layers:
   - Default
   - TransparentFX
