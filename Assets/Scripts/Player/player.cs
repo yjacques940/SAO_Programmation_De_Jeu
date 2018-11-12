@@ -72,6 +72,7 @@ public class player : MonoBehaviour {
         GameObject weaponEquipped;
         weaponEquipped = Instantiate(Resources.Load("Weapons/" + weapon.name)) as GameObject;
         weaponEquipped.transform.position = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.position;
+        weaponEquipped.transform.rotation = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.rotation;
         weaponEquipped.transform.parent = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform;
     }
     void OnControllerColliderHit(ControllerColliderHit hit)
