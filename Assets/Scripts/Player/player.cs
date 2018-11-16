@@ -5,8 +5,10 @@ using Unity.Collections.LowLevel.Unsafe;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class player : MonoBehaviour {
+public class player : MonoBehaviour
+{
 
     int experience;
     int skillpoints;
@@ -36,15 +38,16 @@ public class player : MonoBehaviour {
     public float CurrentHealth;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         controller = GetComponent<CharacterController>();
         rayHit = GameObject.Find("RayHit");
         CurrentHealth = MaxHealth;
         anim = GetComponent<Animator>();
         equipWeapon();
-	}
-	
-    public void ReceiveRewards(int experienceReceived,int skillPointsReceived, GameObject itemReceived)
+    }
+
+    public void ReceiveRewards(int experienceReceived, int skillPointsReceived, GameObject itemReceived)
     {
         ReceiveExperiencePoints(experienceReceived);
         ReceiveSkillPoints(skillPointsReceived);
@@ -66,7 +69,7 @@ public class player : MonoBehaviour {
         //complete when inventory system is defined
         print(itemReceived.name);
     }
-    
+
     void equipWeapon()
     {
         GameObject weaponEquipped;
@@ -82,7 +85,7 @@ public class player : MonoBehaviour {
 
     void Update()
     {
-        if (controller.isGrounded && CurrentHealth>0)
+        if (controller.isGrounded && CurrentHealth > 0)
         {
             inputH = Input.GetAxis("Horizontal") * 2;
             inputV = Input.GetAxis("Vertical") * 2;
@@ -129,22 +132,6 @@ public class player : MonoBehaviour {
             Attack();
         }
 
-        //if (Input.GetKey("E") == true)
-        //{
-        //var equipSlot = equippableItem.GetBestEquipSlot(characterCollection);
-        //if (equipSlot == null)
-        //    return; // can't equip, no slots found.
-
-        //characterCollection.EquipItem(equipSlot, equippableItem); // Equip the item to the character collection. 
-
-        //// OR 
-        //var bestEquipSlot = equippableItem.GetBestEquipSlot(characterCollection);
-        //if (bestEquipSlot == null)
-        //    return;
-
-        //equippableItem.Equip(bestEquipSlot);
-        //}
-
         if (isAttacking)
         {
             currentCooldown -= Time.deltaTime;
@@ -154,10 +141,6 @@ public class player : MonoBehaviour {
             currentCooldown = attackCooldown;
             isAttacking = false;
         }
-
-
-        //Fire1 is Left Click
-        //Fire3 is left Shift
     }
 
     public void Attack()
@@ -172,7 +155,7 @@ public class player : MonoBehaviour {
                 if (hit.transform.tag.Contains("Ennemy") || hit.transform.tag == "Boss")
                 {
                     float attackDamage = baseAttackDamage;
-                    if(weapon)
+                    if (weapon)
                     {
                         attackDamage += weapon.Damage;
                     }
@@ -182,6 +165,11 @@ public class player : MonoBehaviour {
             }
             isAttacking = true;
         }
+    }
+
+    internal bool IsDead()
+    {
+        return false;
     }
 
     public void IsGettingAttacked(float damage)
@@ -200,11 +188,6 @@ public class player : MonoBehaviour {
                 anim.Play("DAMAGED01", -1, 0f);
             }
         }
-    }
-
-    public bool IsDead()
-    {
-        return dead;
     }
 
 }

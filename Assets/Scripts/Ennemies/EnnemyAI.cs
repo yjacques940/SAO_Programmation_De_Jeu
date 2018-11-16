@@ -36,7 +36,7 @@ public class EnnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (CurrentLifeOFMonster > 0)
+        if (CurrentLifeOFMonster > 0 && !Player.transform.GetComponent<player>().IsDead())
         {
             var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
             if (distance <= PlayerDetector)
@@ -57,7 +57,7 @@ public class EnnemyAI : MonoBehaviour
 
     private void FollowPlayer(float distance)
     {
-        if (distance > MinimumDistance)
+        if (distance > MinimumDistance && !IsAttacking && !GetComponent<Animation>().IsPlaying("Attack"))
         {
             GetComponent<Animation>().CrossFade(Run.name);
             if (Monster.transform.position.x > 0)
@@ -73,7 +73,7 @@ public class EnnemyAI : MonoBehaviour
 
     private void CheckDistance(float distance)
     {
-        if (distance <= MinimumDistance + 1)
+        if (distance <= MinimumDistance + 2)
         {
             if (!GetComponent<Animation>().IsPlaying("Damage") && !GetComponent<Animation>().IsPlaying("Attack"))
             {
@@ -91,19 +91,17 @@ public class EnnemyAI : MonoBehaviour
             }
         }
     }
-
+    
     private void AttackPlayer()
     {
         if (!Player.transform.GetComponent<player>().IsDead())
         {
             if (!IsAttacking)
             {
-                GetComponent<Animation>().CrossFade(Attack.name);
                 RaycastHit hit;
-                Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 1), Color.red,3);
-                if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, 1))
+                Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 3), Color.red,3);
+                if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit,3))
                 {
-                   
                     if (hit.transform.tag.Contains("Player"))
                     {
                         hit.transform.GetComponent<player>().IsGettingAttacked(20f);
@@ -156,7 +154,7 @@ public class EnnemyAI : MonoBehaviour
 
     private void MonsterHasNoTarget()
     {
-        if (!Chasing && !Attack)
+        if (Player.transform.GetComponent<player>().IsDead()&&!Chasing)
         {
             GetComponent<Animation>().CrossFade(Idle.name);
         }
