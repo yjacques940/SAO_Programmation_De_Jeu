@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.Collections.LowLevel.Unsafe;
-using Devdog.InventoryPro;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
