@@ -38,6 +38,12 @@ public class player : MonoBehaviour
     public float CurrentHealth;
     private int numberOfEnnemiesKilled = 0;
 
+    public bool Dead
+    {
+        get{return dead;}
+        set { dead = value;}
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -87,6 +93,40 @@ public class player : MonoBehaviour
     void Update()
     {
         if (Cursor.visible && Time.timeScale > 0)
+        Move();
+        Rotate();
+        //playerCamera.transform.Rotate(rotateDirection);
+        //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
+        if (Input.GetAxis("Fire1") != 0  && !isAttacking)
+        {
+            Attack();
+            if (Dead)
+            {
+                Respawn();
+            }
+        }
+        else
+        {
+            currentCooldown -= Time.deltaTime;
+        }
+
+        if (currentCooldown <= 0)
+        {
+            currentCooldown = attackCooldown;
+            isAttacking = false;
+        }
+    }
+
+    private void Rotate()
+    {
+        rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+        rotateDirection *= rotationSpeed;
+        this.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
+    }
+
+    private void Move()
+    {
+        if (controller.isGrounded && CurrentHealth > 0)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -95,11 +135,18 @@ public class player : MonoBehaviour
         if (Time.timeScale > 0 && CurrentHealth > 0)
         {
             if (controller.isGrounded)
+            inputH = Input.GetAxis("Horizontal") * 2;
+            inputV = Input.GetAxis("Vertical") * 2;
+            anim.SetFloat("inputH", inputH);
+            anim.SetFloat("inputV", inputV);
+            moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
+            if (Input.GetAxis("Fire3") > 0)
             {
                 inputH = Input.GetAxis("Horizontal") * 2;
                 inputV = Input.GetAxis("Vertical") * 2;
                 anim.SetFloat("inputH", inputH);
                 anim.SetFloat("inputV", inputV);
+                Sprint();
 
                 moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
                 if (Input.GetAxis("Fire3") > 0)
@@ -126,6 +173,12 @@ public class player : MonoBehaviour
                 }
 
             }
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection *= movingSpeed;
+            if (Input.GetButton("Jump") && myAng < 45)
+            {
+                Jump();
+            }
 
             rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
             rotateDirection *= rotationSpeed;
@@ -138,6 +191,14 @@ public class player : MonoBehaviour
             {
                 Attack();
             }
+            else
+            {
+                anim.SetBool("jump", false);
+            }
+        }
+        moveDirection.y -= gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
+    }
 
             if (isAttacking)
             {
@@ -149,12 +210,24 @@ public class player : MonoBehaviour
                 isAttacking = false;
             }
         }
+    private void Sprint()
+    {
+        moveDirection[2] *= 2F;
+    }
+
+    private void Jump()
+    {
+        anim.SetBool("jump", true);
+        moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
+        if (moveDirection.y == 0 && inputV > 0)
+        {
+            anim.SetFloat("inputH", inputH);
+            anim.SetFloat("inputV", inputV);
+        }
     }
 
     public void Attack()
     {
-        if (!isAttacking)
-        {
             anim.Play("Attack");
             RaycastHit hit;
             if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
@@ -174,10 +247,10 @@ public class player : MonoBehaviour
                             HealPlayer(hit);
                     }
                    
+                    hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(CalculateAttackDamage());                 
                 }
             }
             isAttacking = true;
-        }
     }
 
     private void HealPlayer(RaycastHit hit)
@@ -203,8 +276,14 @@ public class player : MonoBehaviour
     }
 
     public bool IsDead()
+    private float CalculateAttackDamage()
     {
-        return (CurrentHealth <= 0);
+        float attackDamage = baseAttackDamage;
+        if (weapon)
+        {
+            attackDamage += weapon.Damage;
+        }
+        return attackDamage;
     }
 
     public void DeclareDead()
@@ -215,14 +294,49 @@ public class player : MonoBehaviour
 
     public void IsGettingAttacked(float damage)
     {
-        if (!IsDead())
+        if (CurrentHealth > 0)
         {
             if (!isAttacking)
                 anim.Play("DAMAGED00");
             CurrentHealth -= damage;
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
             if (IsDead()) DeclareDead();
+            UpdateHealthBar();
+        }
+        else
+        {
+            Die();
         }
     }
 
+    private void Die()
+    {
+        Dead = true;
+        anim.SetBool("isDead", true);
+        anim.Play("DAMAGED01");
+    }
+
+    private void Respawn()
+    {
+        //set position to spawnpoint;
+        anim.SetBool("isDead", false);
+        Dead = false;
+        RefillHealthAmount(MaxHealth);
+        UpdateHealthBar();
+    }
+
+    private void RefillHealthAmount(float healingAmount)
+    {
+        CurrentHealth += healingAmount;
+        if (CurrentHealth >= MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+      
+    }
+
+    private void UpdateHealthBar()
+    {
+        HealthBar.fillAmount = CurrentHealth / MaxHealth;
+    }
 }
