@@ -167,26 +167,24 @@ public class player : MonoBehaviour
         }
     }
 
-    internal bool IsDead()
+    public bool IsDead()
     {
-        return false;
+        return (CurrentHealth <= 0);
     }
 
     public void IsGettingAttacked(float damage)
     {
-        if (CurrentHealth > 0)
+        if (!IsDead())
         {
-            anim.Play("DAMAGED00", -1, 0f);
+            anim.Play("DAMAGED00");
             CurrentHealth -= damage;
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
         }
         else
         {
-            if (!dead)
-            {
-                dead = true;
-                anim.Play("DAMAGED01", -1, 0f);
-            }
+            dead = true;
+            anim.SetBool("isDead", true);
+            anim.Play("DAMAGED01");
         }
     }
 
