@@ -7,21 +7,17 @@ public class SceneController : MonoBehaviour {
 
     public static SceneController sceneControl;
 
-    public GameObject canvas;
-
-    //private void Awake() {
-    //    if (sceneControl == null) {
-    //        DontDestroyOnLoad(gameObject);
-    //        sceneControl = this;
-    //    }
-    //    else if (sceneControl != this) {
-    //        Destroy(gameObject);
-    //    }
-    //}
-
-    public void ReloadCurrentScene()
-    {
-        Time.timeScale = 1;
+    private void Awake() {
+        if (sceneControl == null) {
+            DontDestroyOnLoad(gameObject);
+            sceneControl = this;
+        }
+        else if (sceneControl != this) {
+            Destroy(gameObject);
+        }
+    }
+    
+    public void ReloadCurrentScene() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
