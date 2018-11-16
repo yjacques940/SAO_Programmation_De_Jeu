@@ -5,50 +5,10 @@ using Unity.Collections.LowLevel.Unsafe;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-    // Use this for initialization
-    void Start () {
-        controller = GetComponent<CharacterController>();
-        rayHit = GameObject.Find("RayHit");
-        CurrentHealth = MaxHealth;
-        anim = GetComponent<Animator>();
-        equipWeapon();
-	}
-	
-    public void ReceiveRewards(int experienceReceived,int skillPointsReceived, GameObject itemReceived)
-    {
-        ReceiveExperiencePoints(experienceReceived);
-        ReceiveSkillPoints(skillPointsReceived);
-        AddItemToInventory(itemReceived);
-    }
-
-    void ReceiveExperiencePoints(int experienceReceived)
-    {
-        experience += experienceReceived;
-    }
-
-    void ReceiveSkillPoints(int skillPointsReceived)
-    {
-        skillpoints += skillPointsReceived;
-    }
-
-    void AddItemToInventory(GameObject itemReceived)
-    {
-        //complete when inventory system is defined
-        print(itemReceived.name);
-    }
-    
-    void equipWeapon()
-    {
-        GameObject weaponEquipped;
-        weaponEquipped = Instantiate(Resources.Load("Weapons/RPG Swords/" + weapon.name)) as GameObject;
-        weaponEquipped.transform.position = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform.position;
-        weaponEquipped.transform.parent = GameObject.FindGameObjectWithTag("PlayerWeaponHand").transform;
-    }
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        myAng = Vector3.Angle(Vector3.up, hit.normal); //Calc angle between normal and character
-    }
+public class player : MonoBehaviour
+{
 
     int experience;
     int skillpoints;
@@ -78,69 +38,38 @@ using UnityEngine.UI;
     public float CurrentHealth;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         controller = GetComponent<CharacterController>();
         rayHit = GameObject.Find("RayHit");
         CurrentHealth = MaxHealth;
         anim = GetComponent<Animator>();
         equipWeapon();
-	}
-	
-    public void ReceiveRewards(int experienceReceived,int skillPointsReceived, GameObject itemReceived)
+    }
+
+    public void ReceiveRewards(int experienceReceived, int skillPointsReceived, GameObject itemReceived)
     {
         ReceiveExperiencePoints(experienceReceived);
         ReceiveSkillPoints(skillPointsReceived);
         AddItemToInventory(itemReceived);
     }
 
-    public void Attack()
+    void ReceiveExperiencePoints(int experienceReceived)
     {
-        if (!isAttacking)
-        {
-            anim.Play("Attack");
-            RaycastHit hit;
-            if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
-            {
-                Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
-                if (hit.transform.tag.Contains("Ennemy") || hit.transform.tag == "Boss")
-                {
-                    float attackDamage = baseAttackDamage;
-                    if(weapon)
-                    {
-                        attackDamage += weapon.Damage;
-                    }
-                    hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
-                    print(hit.transform.name + " detected");
-                }
-            }
-            isAttacking = true;
-        }
+        experience += experienceReceived;
     }
 
-    public void IsGettingAttacked(float damage)
+    void ReceiveSkillPoints(int skillPointsReceived)
     {
-        if (CurrentHealth > 0)
-        {
-            anim.Play("DAMAGED00", -1, 0f);
-            CurrentHealth -= damage;
-            HealthBar.fillAmount = CurrentHealth / MaxHealth;
-        }
-        else
-        {
-            if (!dead)
-            {
-                dead = true;
-                anim.Play("DAMAGED01", -1, 0f);
-            }
-        }
+        skillpoints += skillPointsReceived;
     }
 
-    public bool IsDead()
+    void AddItemToInventory(GameObject itemReceived)
     {
         //complete when inventory system is defined
         print(itemReceived.name);
     }
-    
+
     void equipWeapon()
     {
         GameObject weaponEquipped;
@@ -156,7 +85,7 @@ using UnityEngine.UI;
 
     void Update()
     {
-        if (controller.isGrounded && CurrentHealth>0)
+        if (controller.isGrounded && CurrentHealth > 0)
         {
             inputH = Input.GetAxis("Horizontal") * 2;
             inputV = Input.GetAxis("Vertical") * 2;
@@ -203,22 +132,6 @@ using UnityEngine.UI;
             Attack();
         }
 
-        //if (Input.GetKey("E") == true)
-        //{
-        //var equipSlot = equippableItem.GetBestEquipSlot(characterCollection);
-        //if (equipSlot == null)
-        //    return; // can't equip, no slots found.
-
-        //characterCollection.EquipItem(equipSlot, equippableItem); // Equip the item to the character collection. 
-
-        //// OR 
-        //var bestEquipSlot = equippableItem.GetBestEquipSlot(characterCollection);
-        //if (bestEquipSlot == null)
-        //    return;
-
-        //equippableItem.Equip(bestEquipSlot);
-        //}
-
         if (isAttacking)
         {
             currentCooldown -= Time.deltaTime;
@@ -228,10 +141,6 @@ using UnityEngine.UI;
             currentCooldown = attackCooldown;
             isAttacking = false;
         }
-
-
-        //Fire1 is Left Click
-        //Fire3 is left Shift
     }
 
     public void Attack()
@@ -246,7 +155,7 @@ using UnityEngine.UI;
                 if (hit.transform.tag.Contains("Ennemy") || hit.transform.tag == "Boss")
                 {
                     float attackDamage = baseAttackDamage;
-                    if(weapon)
+                    if (weapon)
                     {
                         attackDamage += weapon.Damage;
                     }
@@ -256,6 +165,11 @@ using UnityEngine.UI;
             }
             isAttacking = true;
         }
+    }
+
+    internal bool IsDead()
+    {
+        return false;
     }
 
     public void IsGettingAttacked(float damage)
@@ -274,11 +188,6 @@ using UnityEngine.UI;
                 anim.Play("DAMAGED01", -1, 0f);
             }
         }
-    }
-
-    public bool IsDead()
-    {
-        return dead;
     }
 
 }
