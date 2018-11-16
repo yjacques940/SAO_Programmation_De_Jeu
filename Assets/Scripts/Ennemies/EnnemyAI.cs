@@ -8,6 +8,7 @@ using System;
 public class EnnemyAI : MonoBehaviour
 {
     private float currentCooldown;
+    private bool isDead = false;
     public float attackCooldown;
     public float PlayerDetector = 10f;
     public float MinimumDistance = 6;
@@ -93,23 +94,30 @@ public class EnnemyAI : MonoBehaviour
 
     private void AttackPlayer()
     {
-        if (!IsAttacking)
+        if (!Player.transform.GetComponent<Character_Motor>().IsDead())
         {
-            print("test2");
-            RaycastHit hit;
-            Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 1), Color.red,3);
-            if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, 1))
+            if (!IsAttacking)
             {
-                print("test3");
-               
-                if (hit.transform.tag.Contains("Player"))
+                GetComponent<Animation>().CrossFade(Attack.name);
+                RaycastHit hit;
+                Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 1), Color.red,3);
+                if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, 1))
                 {
-                    hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(20f);
-                    print(hit.transform.name + " detected");
+                   
+                    if (hit.transform.tag.Contains("Player"))
+                    {
+                        hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(20f);
+                    }
                 }
+                IsAttacking = true;
+                Chasing = false;
             }
-            IsAttacking = true;
+        }
+        else
+        {
             Chasing = false;
+            IsAttacking = false;
+            GetComponent<Animation>().CrossFade(Idle.name);
         }
     }
 
@@ -124,12 +132,16 @@ public class EnnemyAI : MonoBehaviour
         }
         else
         {
-            Dies();
+            if (!isDead)
+            {
+                Dies();
+            }
         }
     }
 
     private void Dies()
     {
+        isDead = true;
         GetComponent<Animation>().CrossFade(Die.name);
         GiveReward();
         Destroy(Monster.gameObject, 10);
