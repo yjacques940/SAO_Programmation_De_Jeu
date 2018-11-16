@@ -94,7 +94,7 @@ public class EnnemyAI : MonoBehaviour
 
     private void AttackPlayer()
     {
-        if (!Player.transform.GetComponent<Character_Motor>().IsDead())
+        if (!Player.transform.GetComponent<player>().IsDead())
         {
             if (!IsAttacking)
             {
@@ -106,7 +106,7 @@ public class EnnemyAI : MonoBehaviour
                    
                     if (hit.transform.tag.Contains("Player"))
                     {
-                        hit.transform.GetComponent<Character_Motor>().IsGettingAttacked(20f);
+                        hit.transform.GetComponent<player>().IsGettingAttacked(20f);
                     }
                 }
                 IsAttacking = true;
@@ -127,7 +127,7 @@ public class EnnemyAI : MonoBehaviour
         {
             GetComponent<Animation>().CrossFade(Damage.name);
             CurrentLifeOFMonster -= damage;
-            print(CurrentLifeOFMonster);
+            print(damage + " damage dealt");
             HealthBar.fillAmount = CurrentLifeOFMonster / MaxLifeOFMonster;
         }
         else
