@@ -8,7 +8,7 @@ using System;
 public class EnnemyAI : MonoBehaviour
 {
     private float currentCooldown;
-    private bool isDead = false;
+    public bool isDead = false;
     public float attackCooldown;
     public float PlayerDetector = 10f;
     public float MinimumDistance = 6;
@@ -16,6 +16,7 @@ public class EnnemyAI : MonoBehaviour
     public float MaxLifeOFMonster = 100;
     public bool Chasing = false;
     public bool IsAttacking = false;
+    public float AttackDamage;
     public NavMeshAgent Monster;
     public AnimationClip Run;
     public AnimationClip Attack;
@@ -104,7 +105,8 @@ public class EnnemyAI : MonoBehaviour
                 {
                     if (hit.transform.tag.Contains("Player"))
                     {
-                        hit.transform.GetComponent<player>().IsGettingAttacked(20f);
+                        print("Damage a unity: " + AttackDamage);
+                        hit.transform.GetComponent<player>().IsGettingAttacked(AttackDamage);
                     }
                 }
                 IsAttacking = true;
@@ -127,6 +129,8 @@ public class EnnemyAI : MonoBehaviour
             CurrentLifeOFMonster -= damage;
             print(damage + " damage dealt");
             HealthBar.fillAmount = CurrentLifeOFMonster / MaxLifeOFMonster;
+            if (CurrentLifeOFMonster <= 0)
+            { Dies(); }
         }
         else
         {
@@ -136,7 +140,6 @@ public class EnnemyAI : MonoBehaviour
             }
         }
     }
-
     private void Dies()
     {
         isDead = true;

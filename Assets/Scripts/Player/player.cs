@@ -22,6 +22,7 @@ public class player : MonoBehaviour
     private float inputV;
     private float myAng = 0;
     private bool dead = false;
+    private const float percentageToStealToEnnemy = 0.3f;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
     public float rotationSpeed = 6.0F;
@@ -160,11 +161,25 @@ public class player : MonoBehaviour
                         attackDamage += weapon.Damage;
                     }
                     hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
-                    print(hit.transform.name + " detected");
+                    if (hit.transform.GetComponent<EnnemyAI>().isDead) { HealPlayer(hit); }
                 }
             }
             isAttacking = true;
         }
+    }
+
+    private void HealPlayer(RaycastHit hit)
+    {
+        var lifeToHeal = hit.transform.GetComponent<EnnemyAI>().MaxLifeOFMonster * percentageToStealToEnnemy;
+        if(CurrentHealth + lifeToHeal < MaxHealth)
+        {
+            CurrentHealth = CurrentHealth + lifeToHeal;
+        }
+        else
+        {
+            CurrentHealth = MaxHealth;
+        }
+        HealthBar.fillAmount = CurrentHealth / MaxHealth;
     }
 
     public bool IsDead()

@@ -228,6 +228,11 @@ Prefab:
       propertyPath: m_FillAmount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114578069374785678, guid: 8d73df3897dabfb4ca65abf42b6b04fb,
+        type: 2}
+      propertyPath: attackCooldown
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d73df3897dabfb4ca65abf42b6b04fb, type: 2}
   m_IsPrefabAsset: 0

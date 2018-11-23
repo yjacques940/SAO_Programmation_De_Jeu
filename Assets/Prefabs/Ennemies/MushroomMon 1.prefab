@@ -475,13 +475,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f815c8628819e854882bed4a40facd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 1
+  attackCooldown: 0.4
   PlayerDetector: 10
   MinimumDistance: 3
   CurrentLifeOFMonster: 0
-  MaxLifeOFMonster: 100
+  MaxLifeOFMonster: 150
   Chasing: 1
   IsAttacking: 0
+  AttackDamage: 15
   Monster: {fileID: 195188982899873388}
   Run: {fileID: 7400000, guid: 0e92216e76934164ebc2ff6dcb6caa6a, type: 2}
   Attack: {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}

@@ -36,19 +36,16 @@ public class SpawnPoints : MonoBehaviour {
         switch (monsterToLoad)
         {
             case 1:
-                typeOfMonster = "Ennemies/MushroomMon";
+                typeOfMonster = "Ennemies/RedMushroom";
                 break;
             case 2:
-                typeOfMonster = "Ennemies/MushroomMon1";
+                typeOfMonster = "Ennemies/GreenMushroom";
                 break;
             case 3:
-                typeOfMonster = "Ennemies/MushroomMon2";
-                break;
-            case 4:
-                typeOfMonster = "Ennemies/MushroomMon3";
+                typeOfMonster = "Ennemies/BlueMushroom";
                 break;
             default:
-                typeOfMonster = "Ennemies/MushroomMon";
+                typeOfMonster = "Ennemies/RedMushroom";
                 break;
         }
         return typeOfMonster;
