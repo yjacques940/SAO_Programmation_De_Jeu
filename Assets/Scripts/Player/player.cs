@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class player : MonoBehaviour
+public class player : Entities, ISpawnable
 {
 
     int experience;
@@ -354,5 +354,15 @@ public class player : MonoBehaviour
     private void UpdateHealthBar()
     {
         HealthBar.fillAmount = CurrentHealth / MaxHealth;
+    }
+
+    override public string getTypeofSpawnable()
+    {
+        return "Players";
+    }
+
+    override public string getNameOfSpawnable()
+    {
+        return this.name;
     }
 }

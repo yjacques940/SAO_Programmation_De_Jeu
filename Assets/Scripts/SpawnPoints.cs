@@ -4,27 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPoints : MonoBehaviour {
-    
+
+    [SerializeField] Entities itemToSpawn;
+
     private void Awake()
     {
-        LoadEnnemies();
+        SpawnItem();
     }
 
-    private void LoadEnnemies()
+    private void SpawnItem()
     {
-        GameObject monster;
-        string typeOfMonster;
-        if (gameObject.CompareTag("BossSpawnPoint"))
-        {
-            typeOfMonster = "Ennemies/Boss";
-        }
-        else
-        {
-            typeOfMonster = GetTypeOfMonsterToLoad();
-        }
-        
-        monster = Instantiate(Resources.Load(typeOfMonster)) as GameObject;
-        monster.transform.position = this.transform.position;
+        GameObject spawnedItem;
+        string typeOf = itemToSpawn.getTypeofSpawnable();
+        string nameOf = itemToSpawn.getNameOfSpawnable();
+        print(typeOf + "/" + nameOf); ;      
+        spawnedItem = Instantiate(Resources.Load(typeOf+"/"+ nameOf)) as GameObject;
+        spawnedItem.transform.position = this.transform.position;
+
     }
 
     private string GetTypeOfMonsterToLoad()
