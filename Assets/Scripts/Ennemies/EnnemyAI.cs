@@ -145,7 +145,7 @@ public class EnnemyAI : MonoBehaviour
         isDead = true;
         GetComponent<Animation>().CrossFade(Die.name);
         GiveReward();
-        Destroy(Monster.gameObject, 10);
+        Destroy(Monster.gameObject, 5);
     }
 
     private void GiveReward()
