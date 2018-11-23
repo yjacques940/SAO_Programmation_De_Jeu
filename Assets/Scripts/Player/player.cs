@@ -92,6 +92,7 @@ public class player : MonoBehaviour
 
     void Update()
     {
+        if (!Dead)
         if (Cursor.visible && Time.timeScale > 0)
         Move();
         Rotate();
@@ -99,21 +100,31 @@ public class player : MonoBehaviour
         //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
         if (Input.GetAxis("Fire1") != 0  && !isAttacking)
         {
-            Attack();
-            if (Dead)
+            Move();
+            Rotate();
+            //playerCamera.transform.Rotate(rotateDirection);
+            //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
+            if (Input.GetAxis("Fire1") != 0 && !isAttacking)
             {
-                Respawn();
+                    Attack();
+            }
+            else
+            {
+                currentCooldown -= Time.deltaTime;
+            }
+
+            if (currentCooldown <= 0)
+            {
+                currentCooldown = attackCooldown;
+                isAttacking = false;
             }
         }
         else
         {
-            currentCooldown -= Time.deltaTime;
-        }
-
-        if (currentCooldown <= 0)
-        {
-            currentCooldown = attackCooldown;
-            isAttacking = false;
+            if (Input.GetAxis("Fire1") != 0)
+            {
+                Respawn();
+            }
         }
     }
 
@@ -312,14 +323,19 @@ public class player : MonoBehaviour
     private void Die()
     {
         Dead = true;
-        anim.SetBool("isDead", true);
         anim.Play("DAMAGED01");
+        PenaliseDeath();
+    }
+
+    private void PenaliseDeath()
+    {
+        MaxHealth -= 5f;
+        //baseAttackDamage -= 1;
     }
 
     private void Respawn()
     {
-        //set position to spawnpoint;
-        anim.SetBool("isDead", false);
+        //set position to spawnpoint;     
         Dead = false;
         RefillHealthAmount(MaxHealth);
         UpdateHealthBar();
