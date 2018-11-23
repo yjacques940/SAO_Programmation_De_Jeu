@@ -16,12 +16,10 @@ public class SpawnPoints : MonoBehaviour {
         string typeOfMonster;
         if (gameObject.CompareTag("BossSpawnPoint"))
         {
-            print("CECI EST UN BOSS");
             typeOfMonster = "Ennemies/Boss";
         }
         else
         {
-
             typeOfMonster = GetTypeOfMonsterToLoad();
         }
         

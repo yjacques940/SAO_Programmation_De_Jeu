@@ -37,6 +37,7 @@ public class player : MonoBehaviour
     public Image HealthBar;
     public float MaxHealth = 200;
     public float CurrentHealth;
+    private int numberOfEnnemiesKilled = 0;
 
     // Use this for initialization
     void Start()
@@ -155,13 +156,18 @@ public class player : MonoBehaviour
                 Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
                 if (hit.transform.tag.Contains("Ennemy") || hit.transform.tag == "Boss")
                 {
-                    float attackDamage = baseAttackDamage;
-                    if (weapon)
+                    if (!hit.transform.GetComponent<EnnemyAI>().isDead)
                     {
-                        attackDamage += weapon.Damage;
+                        float attackDamage = baseAttackDamage;
+                        if (weapon)
+                        {
+                            attackDamage += weapon.Damage;
+                        }
+                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
+                        if (hit.transform.GetComponent<EnnemyAI>().isDead)
+                            HealPlayer(hit);
                     }
-                    hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
-                    if (hit.transform.GetComponent<EnnemyAI>().isDead) { HealPlayer(hit); }
+                   
                 }
             }
             isAttacking = true;
@@ -174,12 +180,20 @@ public class player : MonoBehaviour
         if(CurrentHealth + lifeToHeal < MaxHealth)
         {
             CurrentHealth = CurrentHealth + lifeToHeal;
+            
         }
         else
         {
             CurrentHealth = MaxHealth;
         }
         HealthBar.fillAmount = CurrentHealth / MaxHealth;
+        IncreaseNumberOfKilledEnnemies();
+    }
+
+    private void IncreaseNumberOfKilledEnnemies()
+    {
+        numberOfEnnemiesKilled++;
+        GetComponentInChildren<QuestManager>().UpdateText(numberOfEnnemiesKilled);
     }
 
     public bool IsDead()
