@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class player : MonoBehaviour
+public class player : Entities
 {
 
     int experience;
@@ -35,9 +35,15 @@ public class player : MonoBehaviour
     public float attackCooldown;
     public float attackRange = 1;
     public Image HealthBar;
-    public float MaxHealth = 200;
-    public float CurrentHealth;
+    public const float MaxHealth = 200;
+    public float CurrentHealth = MaxHealth;
     private int numberOfEnnemiesKilled = 0;
+
+    public bool Dead
+    {
+        get { return dead; }
+        set { dead = value; }
+    }
 
     // Use this for initialization
     void Start()
@@ -87,6 +93,45 @@ public class player : MonoBehaviour
 
     void Update()
     {
+        if (!Dead)
+        {
+            Move();
+            Rotate();
+            //playerCamera.transform.Rotate(rotateDirection);
+            //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
+            if (Input.GetAxis("Fire1") != 0 && !isAttacking)
+            {
+                Attack();
+            }
+            else
+            {
+                currentCooldown -= Time.deltaTime;
+            }
+
+            if (currentCooldown <= 0)
+            {
+                currentCooldown = attackCooldown;
+                isAttacking = false;
+            }
+        }
+        else
+        {
+            if (Input.GetAxis("Fire1") != 0)
+            {
+                Respawn();
+            }
+        }
+    }
+
+    private void Rotate()
+    {
+        rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+        rotateDirection *= rotationSpeed;
+        this.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
+    }
+
+    private void Move()
+    {
         if (controller.isGrounded && CurrentHealth > 0)
         {
             inputH = Input.GetAxis("Horizontal") * 2;
@@ -97,7 +142,7 @@ public class player : MonoBehaviour
             moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
             if (Input.GetAxis("Fire3") > 0)
             {
-                moveDirection[2] *= 2F;
+                Sprint();
 
             }
             moveDirection = transform.TransformDirection(moveDirection);
@@ -105,43 +150,30 @@ public class player : MonoBehaviour
 
             if (Input.GetButton("Jump") && myAng < 45)
             {
-                anim.SetBool("jump", true);
-                moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
-                if (moveDirection.y == 0 && inputV > 0)
-                {
-                    anim.SetFloat("inputH", inputH);
-                    anim.SetFloat("inputV", inputV);
-                }
+                Jump();
             }
             else
             {
                 anim.SetBool("jump", false);
             }
-
         }
-
-        rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-        rotateDirection *= rotationSpeed;
-
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
-        this.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
-        //playerCamera.transform.Rotate(rotateDirection);
-        //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
+    }
 
-        if (Input.GetAxis("Fire1") != 0 && CurrentHealth > 0)
-        {
-            Attack();
-        }
+    private void Sprint()
+    {
+        moveDirection[2] *= 2F;
+    }
 
-        if (isAttacking)
+    private void Jump()
+    {
+        anim.SetBool("jump", true);
+        moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
+        if (moveDirection.y == 0 && inputV > 0)
         {
-            currentCooldown -= Time.deltaTime;
-        }
-        if (currentCooldown <= 0)
-        {
-            currentCooldown = attackCooldown;
-            isAttacking = false;
+            anim.SetFloat("inputH", inputH);
+            anim.SetFloat("inputV", inputV);
         }
     }
 
@@ -158,16 +190,10 @@ public class player : MonoBehaviour
                 {
                     if (!hit.transform.GetComponent<EnnemyAI>().isDead)
                     {
-                        float attackDamage = baseAttackDamage;
-                        if (weapon)
-                        {
-                            attackDamage += weapon.Damage;
-                        }
-                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
+                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(CalculateAttackDamage());
                         if (hit.transform.GetComponent<EnnemyAI>().isDead)
                             HealPlayer(hit);
                     }
-                   
                 }
             }
             isAttacking = true;
@@ -177,10 +203,10 @@ public class player : MonoBehaviour
     private void HealPlayer(RaycastHit hit)
     {
         var lifeToHeal = hit.transform.GetComponent<EnnemyAI>().MaxLifeOFMonster * percentageToStealToEnnemy;
-        if(CurrentHealth + lifeToHeal < MaxHealth)
+        if (CurrentHealth + lifeToHeal < MaxHealth)
         {
             CurrentHealth = CurrentHealth + lifeToHeal;
-            
+
         }
         else
         {
@@ -196,25 +222,73 @@ public class player : MonoBehaviour
         GetComponentInChildren<QuestManager>().UpdateText(numberOfEnnemiesKilled);
     }
 
-    public bool IsDead()
+    private float CalculateAttackDamage()
     {
-        return (CurrentHealth <= 0);
+        float attackDamage = baseAttackDamage;
+        if (weapon)
+        {
+            attackDamage += weapon.Damage;
+        }
+        return attackDamage;
     }
 
     public void IsGettingAttacked(float damage)
     {
-        if (!IsDead())
+        if (CurrentHealth > 0)
         {
             anim.Play("DAMAGED00");
             CurrentHealth -= damage;
-            HealthBar.fillAmount = CurrentHealth / MaxHealth;
+            UpdateHealthBar();
         }
         else
         {
-            dead = true;
-            anim.SetBool("isDead", true);
-            anim.Play("DAMAGED01");
+            Die();
         }
     }
 
+    private void Die()
+    {
+        Dead = true;
+        anim.Play("DAMAGED01");
+        PenaliseDeath();
+    }
+
+    private void PenaliseDeath()
+    {
+        CurrentHealth -= 5f;
+        //baseAttackDamage -= 1;
+    }
+
+    public override void Respawn()
+    {
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
+        this.transform.position = spawnPoint.transform.position;
+        Dead = false;
+        RefillHealthAmount(MaxHealth);
+        UpdateHealthBar();
+    }
+
+    private void RefillHealthAmount(float healingAmount)
+    {
+        CurrentHealth += healingAmount;
+        if (CurrentHealth >= MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        HealthBar.fillAmount = CurrentHealth / MaxHealth;
+    }
+
+    override public string getTypeofSpawnable()
+    {
+        return "Players";
+    }
+
+    override public string getNameOfSpawnable()
+    {
+        return this.name;
+    }
 }

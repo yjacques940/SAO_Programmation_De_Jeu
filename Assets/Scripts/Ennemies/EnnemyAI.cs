@@ -37,7 +37,7 @@ public class EnnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (CurrentLifeOFMonster > 0 && !Player.transform.GetComponent<player>().IsDead())
+        if (CurrentLifeOFMonster > 0 && !Player.transform.GetComponent<player>().Dead)
         {
             var distance = Vector3.Distance(Player.transform.position, Monster.transform.position);
             if (distance <= PlayerDetector)
@@ -95,7 +95,7 @@ public class EnnemyAI : MonoBehaviour
     
     private void AttackPlayer()
     {
-        if (!Player.transform.GetComponent<player>().IsDead())
+        if (!Player.transform.GetComponent<player>().Dead)
         {
             if (!IsAttacking)
             {
@@ -157,7 +157,7 @@ public class EnnemyAI : MonoBehaviour
 
     private void MonsterHasNoTarget()
     {
-        if (Player.transform.GetComponent<player>().IsDead()&&!Chasing)
+        if (Player.transform.GetComponent<player>().Dead &&!Chasing)
         {
             GetComponent<Animation>().CrossFade(Idle.name);
         }

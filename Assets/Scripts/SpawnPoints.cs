@@ -3,28 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPoints : MonoBehaviour {
-    
+public class SpawnPoints : MonoBehaviour
+{
+
+    public bool spawnRandomEnnemies;
+    public Entities entityToSpawn;
+
     private void Awake()
     {
-        LoadEnnemies();
+        SpawnItem();
     }
 
-    private void LoadEnnemies()
+    private void SpawnItem()
     {
-        GameObject monster;
-        string typeOfMonster;
-        if (gameObject.CompareTag("BossSpawnPoint"))
+        GameObject spawnedItem;
+        string itemToSpawn = "";
+        if (spawnRandomEnnemies)
         {
-            typeOfMonster = "Ennemies/Boss";
+            itemToSpawn = GetTypeOfMonsterToLoad();
         }
         else
         {
-            typeOfMonster = GetTypeOfMonsterToLoad();
+            itemToSpawn = entityToSpawn.getTypeofSpawnable() + "/" + entityToSpawn.name;
         }
-        
-        monster = Instantiate(Resources.Load(typeOfMonster)) as GameObject;
-        monster.transform.position = this.transform.position;
+        spawnedItem = Instantiate(Resources.Load(itemToSpawn)) as GameObject;
+        spawnedItem.transform.position = this.transform.position;
     }
 
     private string GetTypeOfMonsterToLoad()
