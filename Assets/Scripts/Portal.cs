@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour {
     public int sceneIndex;
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        //SceneController.loadSelectedScene(sceneIndex);
+        SceneController SceneController = new SceneController();
+        SceneController.loadSelectedScene(sceneIndex);
     }
 }
