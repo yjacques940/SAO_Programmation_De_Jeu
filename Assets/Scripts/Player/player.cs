@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class player : Entities, ISpawnable
+public class player : Entities
 {
 
     int experience;
@@ -359,10 +359,5 @@ public class player : Entities, ISpawnable
     override public string getTypeofSpawnable()
     {
         return "Players";
-    }
-
-    override public string getNameOfSpawnable()
-    {
-        return this.name;
     }
 }

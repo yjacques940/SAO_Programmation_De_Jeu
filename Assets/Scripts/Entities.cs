@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Entities : MonoBehaviour
 {
-    virtual public string getNameOfSpawnable()
-    {
-        return "";
-    }
-
     virtual public string getTypeofSpawnable()
     {
         return "";
@@ -16,6 +11,5 @@ public class Entities : MonoBehaviour
 
     virtual public void Respawn()
     {
-
     }
 }

@@ -172,9 +172,4 @@ public class EnnemyAI : Entities
     {
         return "Ennemies";
     }
-
-    override public  string getNameOfSpawnable()
-    {
-        return this.name;
-    }
 }

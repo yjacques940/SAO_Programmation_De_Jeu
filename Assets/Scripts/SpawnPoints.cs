@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SpawnPoints : MonoBehaviour {
 
-    [SerializeField] Entities itemToSpawn;
+    public bool spawnRandomEnnemies;
+    public Entities entityToSpawn;
 
     private void Awake()
     {
@@ -15,12 +16,17 @@ public class SpawnPoints : MonoBehaviour {
     private void SpawnItem()
     {
         GameObject spawnedItem;
-        string typeOf = itemToSpawn.getTypeofSpawnable();
-        string nameOf = itemToSpawn.getNameOfSpawnable();
-        print(typeOf + "/" + nameOf); ;      
-        spawnedItem = Instantiate(Resources.Load(typeOf+"/"+ nameOf)) as GameObject;
+        string itemToSpawn = "";
+        if (spawnRandomEnnemies)
+        {
+            itemToSpawn = GetTypeOfMonsterToLoad();
+        }
+        else
+        {
+            itemToSpawn = entityToSpawn.getTypeofSpawnable() + "/" + entityToSpawn.name;
+        }   
+        spawnedItem = Instantiate(Resources.Load(itemToSpawn)) as GameObject;
         spawnedItem.transform.position = this.transform.position;
-
     }
 
     private string GetTypeOfMonsterToLoad()
