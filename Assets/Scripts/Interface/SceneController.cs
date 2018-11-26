@@ -7,6 +7,8 @@ public class SceneController : MonoBehaviour {
 
     public static SceneController sceneControl;
 
+    public GameObject canvas;
+
     //private void Awake() {
     //    if (sceneControl == null) {
     //        DontDestroyOnLoad(gameObject);
@@ -16,8 +18,10 @@ public class SceneController : MonoBehaviour {
     //        Destroy(gameObject);
     //    }
     //}
-    
-    public void ReloadCurrentScene() {
+
+    public void ReloadCurrentScene()
+    {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

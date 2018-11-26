@@ -3634,14 +3634,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1139348474}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfebbc2e3d3ae0b45b1b6dd5daa0d2dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2007407542}
-  smoothSpeed: 0.125
   offSet: {x: -1.25, y: 0.5, z: -1.25}
+  rotateSpeed: -5
 --- !u!1 &1148847441
 GameObject:
   m_ObjectHideFlags: 0
@@ -7815,6 +7815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38742d30586f024a8b537cbe60ca10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
 --- !u!1 &2069042096
 GameObject:
   m_ObjectHideFlags: 0
