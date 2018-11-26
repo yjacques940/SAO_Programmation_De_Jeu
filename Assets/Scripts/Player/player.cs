@@ -286,7 +286,6 @@ public class player : Entities, ISpawnable
         GetComponentInChildren<QuestManager>().UpdateText(numberOfEnnemiesKilled);
     }
 
-    public bool IsDead()
     private float CalculateAttackDamage()
     {
         float attackDamage = baseAttackDamage;
@@ -333,12 +332,13 @@ public class player : Entities, ISpawnable
         //baseAttackDamage -= 1;
     }
 
-    private void Respawn()
-    {
-        //set position to spawnpoint;     
+    public override void Respawn()
+    {  
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
+        this.transform.position = spawnPoint.transform.position;
         Dead = false;
         RefillHealthAmount(MaxHealth);
-        UpdateHealthBar();
+        UpdateHealthBar();      
     }
 
     private void RefillHealthAmount(float healingAmount)

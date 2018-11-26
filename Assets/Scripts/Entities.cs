@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entities : MonoBehaviour, ISpawnable
+public class Entities : MonoBehaviour
 {
     virtual public string getNameOfSpawnable()
     {
-        return "en";
+        return "";
     }
 
     virtual public string getTypeofSpawnable()
     {
-        return "en";
+        return "";
+    }
+
+    virtual public void Respawn()
+    {
+
     }
 }
