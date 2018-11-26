@@ -21,7 +21,6 @@ public class player : MonoBehaviour
     private float inputH;
     private float inputV;
     private float myAng = 0;
-    private bool dead = false;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
     public float rotationSpeed = 6.0F;
@@ -85,61 +84,68 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        if (controller.isGrounded && CurrentHealth > 0)
+        if (Cursor.visible && Time.timeScale > 0)
         {
-            inputH = Input.GetAxis("Horizontal") * 2;
-            inputV = Input.GetAxis("Vertical") * 2;
-            anim.SetFloat("inputH", inputH);
-            anim.SetFloat("inputV", inputV);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
 
-            moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
-            if (Input.GetAxis("Fire3") > 0)
+        if (Time.timeScale > 0 && CurrentHealth > 0)
+        {
+            if (controller.isGrounded)
             {
-                moveDirection[2] *= 2F;
+                inputH = Input.GetAxis("Horizontal") * 2;
+                inputV = Input.GetAxis("Vertical") * 2;
+                anim.SetFloat("inputH", inputH);
+                anim.SetFloat("inputV", inputV);
 
-            }
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= movingSpeed;
-
-            if (Input.GetButton("Jump") && myAng < 45)
-            {
-                anim.SetBool("jump", true);
-                moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
-                if (moveDirection.y == 0 && inputV > 0)
+                moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
+                if (Input.GetAxis("Fire3") > 0)
                 {
-                    anim.SetFloat("inputH", inputH);
-                    anim.SetFloat("inputV", inputV);
+                    moveDirection[2] *= 2F;
+
                 }
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= movingSpeed;
+
+                if (Input.GetButton("Jump") && myAng < 45)
+                {
+                    anim.SetBool("jump", true);
+                    moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
+                    if (moveDirection.y == 0 && inputV > 0)
+                    {
+                        anim.SetFloat("inputH", inputH);
+                        anim.SetFloat("inputV", inputV);
+                    }
+                }
+                else
+                {
+                    anim.SetBool("jump", false);
+                }
+
             }
-            else
+
+            rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
+            rotateDirection *= rotationSpeed;
+
+            moveDirection.y -= gravity * Time.deltaTime;
+            controller.Move(moveDirection * Time.deltaTime);
+            this.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
+
+            if (Input.GetAxis("Fire1") != 0)
             {
-                anim.SetBool("jump", false);
+                Attack();
             }
 
-        }
-
-        rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-        rotateDirection *= rotationSpeed;
-
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-        this.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
-        //playerCamera.transform.Rotate(rotateDirection);
-        //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
-
-        if (Input.GetAxis("Fire1") != 0 && CurrentHealth > 0)
-        {
-            Attack();
-        }
-
-        if (isAttacking)
-        {
-            currentCooldown -= Time.deltaTime;
-        }
-        if (currentCooldown <= 0)
-        {
-            currentCooldown = attackCooldown;
-            isAttacking = false;
+            if (isAttacking)
+            {
+                currentCooldown -= Time.deltaTime;
+            }
+            if (currentCooldown <= 0)
+            {
+                currentCooldown = attackCooldown;
+                isAttacking = false;
+            }
         }
     }
 
@@ -172,6 +178,12 @@ public class player : MonoBehaviour
         return (CurrentHealth <= 0);
     }
 
+    public void DeclareDead()
+    {
+        anim.SetBool("isDead", true);
+        anim.Play("DAMAGED01");
+    }
+
     public void IsGettingAttacked(float damage)
     {
         if (!IsDead())
@@ -179,12 +191,7 @@ public class player : MonoBehaviour
             anim.Play("DAMAGED00");
             CurrentHealth -= damage;
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
-        }
-        else
-        {
-            dead = true;
-            anim.SetBool("isDead", true);
-            anim.Play("DAMAGED01");
+            if (IsDead()) DeclareDead();
         }
     }
 
