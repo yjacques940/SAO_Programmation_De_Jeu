@@ -58,23 +58,21 @@ public class EnnemyAI : MonoBehaviour
 
     private void FollowPlayer(float distance)
     {
-        if (distance > MinimumDistance && !IsAttacking && !GetComponent<Animation>().IsPlaying("Attack"))
+        print("Distance-->"+distance);
+        print("isattacking-->" + IsAttacking);
+        print("ISPlaying-->" + !GetComponent<Animation>().IsPlaying("Attack"));
+        if (distance > MinimumDistance && !GetComponent<Animation>().IsPlaying("Attack"))
         {
+            print("ALLO");
             GetComponent<Animation>().CrossFade(Run.name);
-            if (Monster.transform.position.x > 0)
-            {
-                Monster.destination = Player.position - new Vector3(MinimumDistance, 0, 0);
-            }
-            else
-            {
-                Monster.destination = Player.position + new Vector3(MinimumDistance, 0, 0);
-            }
+            Vector3 towardPlayer = Player.position - Monster.transform.position;
+            Monster.destination = Player.position - towardPlayer.normalized * 2;
         }
     }
 
     private void CheckDistance(float distance)
     {
-        if (distance <= MinimumDistance + 2)
+        if (distance <= MinimumDistance)
         {
             if (!GetComponent<Animation>().IsPlaying("Damage") && !GetComponent<Animation>().IsPlaying("Attack"))
             {
@@ -100,8 +98,8 @@ public class EnnemyAI : MonoBehaviour
             if (!IsAttacking)
             {
                 RaycastHit hit;
-                Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * 3), Color.red,3);
-                if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit,3))
+                Debug.DrawLine(RayHit.transform.position, (RayHit.transform.position + transform.TransformDirection(Vector3.forward) * MinimumDistance), Color.red,MinimumDistance);
+                if (Physics.Raycast(RayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit,MinimumDistance))
                 {
                     if (hit.transform.tag.Contains("Player"))
                     {

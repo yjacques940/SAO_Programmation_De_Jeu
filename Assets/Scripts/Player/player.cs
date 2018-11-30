@@ -21,7 +21,6 @@ public class player : MonoBehaviour
     private float inputH;
     private float inputV;
     private float myAng = 0;
-    private bool dead = false;
     private const float percentageToStealToEnnemy = 0.3f;
     private CharacterController controller;
     [SerializeField] Camera playerCamera;
