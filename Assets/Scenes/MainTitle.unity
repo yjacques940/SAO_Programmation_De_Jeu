@@ -4474,7 +4474,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: This is war. You must fight against them. You are a warrior. Right?
+  m_Text: "\rFollowing your imprisonment in the Sword Art Offline virtual reality
+    game, you must complete the game to regain your freedom and see your family again.
+    Shrooms have attacked the human world and have taken control of this world for
+    several years. \r\nBecome THE HERO and save all those who are also caught in this
+    game until someone defeats the boss! Good luck!"
 --- !u!222 &1296647709
 CanvasRenderer:
   m_ObjectHideFlags: 0
