@@ -12,6 +12,13 @@ public class MainMenuCamera : MonoBehaviour
     public float rotateSpeed = -5;
     
     private Vector3 point;//the coord to the point where the camera looks at
+
+    private void Start()
+    {
+        rotateSpeed = -5;
+        Time.timeScale = 1;
+    }
+
     private void FixedUpdate()
     {
         if (rotateSpeed < 0.01f)
