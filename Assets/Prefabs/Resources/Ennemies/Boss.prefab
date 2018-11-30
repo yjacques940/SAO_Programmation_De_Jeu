@@ -475,7 +475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f815c8628819e854882bed4a40facd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0.4
+  isDead: 0
+  attackCooldown: 1
   PlayerDetector: 10
   MinimumDistance: 3
   CurrentLifeOFMonster: 0
