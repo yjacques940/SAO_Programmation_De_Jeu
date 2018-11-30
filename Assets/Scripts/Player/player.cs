@@ -218,7 +218,8 @@ public class player : MonoBehaviour
     {
         if (!IsDead())
         {
-            anim.Play("DAMAGED00");
+            if (!isAttacking)
+                anim.Play("DAMAGED00");
             CurrentHealth -= damage;
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
             if (IsDead()) DeclareDead();
