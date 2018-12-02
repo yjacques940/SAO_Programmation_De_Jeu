@@ -37,13 +37,12 @@ public class player : Entities
     public float MaxHealth = 200;
     public float CurrentHealth;
     private int numberOfEnnemiesKilled = 0;
-
+    private bool dead;
     public bool Dead
     {
-        get{return dead;}
-        set { dead = value;}
+        get { return dead; }
+        set { dead = value; }
     }
-
     // Use this for initialization
     void Start()
     {
@@ -92,72 +91,20 @@ public class player : Entities
 
     void Update()
     {
-        if (!Dead)
         if (Cursor.visible && Time.timeScale > 0)
-        Move();
-        Rotate();
-        //playerCamera.transform.Rotate(rotateDirection);
-        //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
-        if (Input.GetAxis("Fire1") != 0  && !isAttacking)
-        {
-            Move();
-            Rotate();
-            //playerCamera.transform.Rotate(rotateDirection);
-            //playerCamera.transform.Translate(new Vector3(0, rotateDirection[0]/25, 0));
-            if (Input.GetAxis("Fire1") != 0 && !isAttacking)
-            {
-                    Attack();
-            }
-            else
-            {
-                currentCooldown -= Time.deltaTime;
-            }
-
-            if (currentCooldown <= 0)
-            {
-                currentCooldown = attackCooldown;
-                isAttacking = false;
-            }
-        }
-        else
-        {
-            if (Input.GetAxis("Fire1") != 0)
-            {
-                Respawn();
-            }
-        }
-    }
-
-    private void Rotate()
-    {
-        rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-        rotateDirection *= rotationSpeed;
-        this.transform.Rotate(new Vector3(0, rotateDirection[1], 0));
-    }
-
-    private void Move()
-    {
-        if (controller.isGrounded && CurrentHealth > 0)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if (Time.timeScale > 0 && CurrentHealth > 0)
+        if (Time.timeScale > 0 && CurrentHealth > 0 && !Dead)
         {
             if (controller.isGrounded)
-            inputH = Input.GetAxis("Horizontal") * 2;
-            inputV = Input.GetAxis("Vertical") * 2;
-            anim.SetFloat("inputH", inputH);
-            anim.SetFloat("inputV", inputV);
-            moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
-            if (Input.GetAxis("Fire3") > 0)
             {
                 inputH = Input.GetAxis("Horizontal") * 2;
                 inputV = Input.GetAxis("Vertical") * 2;
                 anim.SetFloat("inputH", inputH);
                 anim.SetFloat("inputV", inputV);
-                Sprint();
 
                 moveDirection = new Vector3(inputH * 20f * Time.deltaTime, 0, inputV * 50f * Time.deltaTime);
                 if (Input.GetAxis("Fire3") > 0)
@@ -184,12 +131,6 @@ public class player : Entities
                 }
 
             }
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= movingSpeed;
-            if (Input.GetButton("Jump") && myAng < 45)
-            {
-                Jump();
-            }
 
             rotateDirection = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
             rotateDirection *= rotationSpeed;
@@ -202,14 +143,6 @@ public class player : Entities
             {
                 Attack();
             }
-            else
-            {
-                anim.SetBool("jump", false);
-            }
-        }
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-    }
 
             if (isAttacking)
             {
@@ -221,24 +154,19 @@ public class player : Entities
                 isAttacking = false;
             }
         }
-    private void Sprint()
-    {
-        moveDirection[2] *= 2F;
-    }
-
-    private void Jump()
-    {
-        anim.SetBool("jump", true);
-        moveDirection.y = jumpSpeed * Time.deltaTime * 90f;
-        if (moveDirection.y == 0 && inputV > 0)
+        else
         {
-            anim.SetFloat("inputH", inputH);
-            anim.SetFloat("inputV", inputV);
+            if (Input.GetAxis("Fire1") != 0)
+            {
+                Respawn();
+            }
         }
     }
 
     public void Attack()
     {
+        if (!isAttacking)
+        {
             anim.Play("Attack");
             RaycastHit hit;
             if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
@@ -257,20 +185,20 @@ public class player : Entities
                         if (hit.transform.GetComponent<EnnemyAI>().isDead)
                             HealPlayer(hit);
                     }
-                   
-                    hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(CalculateAttackDamage());                 
+
                 }
             }
             isAttacking = true;
+        }
     }
 
     private void HealPlayer(RaycastHit hit)
     {
         var lifeToHeal = hit.transform.GetComponent<EnnemyAI>().MaxLifeOFMonster * percentageToStealToEnnemy;
-        if(CurrentHealth + lifeToHeal < MaxHealth)
+        if (CurrentHealth + lifeToHeal < MaxHealth)
         {
             CurrentHealth = CurrentHealth + lifeToHeal;
-            
+
         }
         else
         {
@@ -286,6 +214,25 @@ public class player : Entities
         GetComponentInChildren<QuestManager>().UpdateText(numberOfEnnemiesKilled);
     }
 
+    public void DeclareDead()
+    {
+        anim.SetBool("isDead", true);
+        anim.Play("DAMAGED01");
+    }
+
+    public void IsGettingAttacked(float damage)
+    {
+        if (Dead)
+        {
+            if (!isAttacking)
+                anim.Play("DAMAGED00");
+            CurrentHealth -= damage;
+            HealthBar.fillAmount = CurrentHealth / MaxHealth;
+            if (Dead) DeclareDead();
+        }
+    }
+
+
     private float CalculateAttackDamage()
     {
         float attackDamage = baseAttackDamage;
@@ -296,34 +243,10 @@ public class player : Entities
         return attackDamage;
     }
 
-    public void DeclareDead()
-    {
-        anim.SetBool("isDead", true);
-        anim.Play("DAMAGED01");
-    }
-
-    public void IsGettingAttacked(float damage)
-    {
-        if (CurrentHealth > 0)
-        {
-            if (!isAttacking)
-                anim.Play("DAMAGED00");
-            CurrentHealth -= damage;
-            HealthBar.fillAmount = CurrentHealth / MaxHealth;
-            if (IsDead()) DeclareDead();
-            UpdateHealthBar();
-        }
-        else
-        {
-            Die();
-        }
-    }
-
     private void Die()
     {
         Dead = true;
-        anim.Play("DAMAGED01");
-        PenaliseDeath();
+        DeclareDead();
     }
 
     private void PenaliseDeath()
@@ -333,12 +256,12 @@ public class player : Entities
     }
 
     public override void Respawn()
-    {  
+    {
         GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
         this.transform.position = spawnPoint.transform.position;
         Dead = false;
         RefillHealthAmount(MaxHealth);
-        UpdateHealthBar();      
+        UpdateHealthBar();
     }
 
     private void RefillHealthAmount(float healingAmount)
@@ -348,7 +271,7 @@ public class player : Entities
         {
             CurrentHealth = MaxHealth;
         }
-      
+
     }
 
     private void UpdateHealthBar()
@@ -360,4 +283,5 @@ public class player : Entities
     {
         return "Players";
     }
+
 }

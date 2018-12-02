@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169639760819002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 134.5, y: 2.5, z: 388.9}
+  m_LocalPosition: {x: 469.63028, y: 0.00000011920929, z: 544.931}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,5 +52,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRandomEnnemies: 0
-  entityToSpawn: {fileID: 114578069374785678, guid: 8d73df3897dabfb4ca65abf42b6b04fb,
+  entityToSpawn: {fileID: 114521856012678328, guid: 37ffa1de462cf98438eeb30e3e89db18,
     type: 2}
