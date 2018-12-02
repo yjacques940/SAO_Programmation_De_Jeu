@@ -176,12 +176,8 @@ public class player : Entities
                 {
                     if (!hit.transform.GetComponent<EnnemyAI>().isDead)
                     {
-                        float attackDamage = baseAttackDamage;
-                        if (weapon)
-                        {
-                            attackDamage += weapon.Damage;
-                        }
-                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
+
+                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(CalculateAttackDamage());
                         if (hit.transform.GetComponent<EnnemyAI>().isDead)
                             HealPlayer(hit);
                     }
@@ -222,13 +218,16 @@ public class player : Entities
 
     public void IsGettingAttacked(float damage)
     {
-        if (Dead)
+        if (!Dead)
         {
             if (!isAttacking)
                 anim.Play("DAMAGED00");
             CurrentHealth -= damage;
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
-            if (Dead) DeclareDead();
+            if(CurrentHealth  <= 0)
+            {
+                Die();
+            }
         }
     }
 
