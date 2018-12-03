@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65729456812982254}
   - component: {fileID: 114809086654822484}
   m_Layer: 0
-  m_Name: TemporaryBossPortal
+  m_Name: BossPortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

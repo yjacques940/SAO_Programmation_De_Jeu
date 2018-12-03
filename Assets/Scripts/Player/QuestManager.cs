@@ -28,8 +28,19 @@ public class QuestManager : MonoBehaviour {
 
     public bool BossDoorHasSpawn(int monstersKilled)
     {
-        if(monstersKilled >= MonstersToKill)
+        if (monstersKilled >= MonstersToKill)
+        {
+            GameObject bossDoor = new GameObject();           
+            bossDoor.transform.position = this.transform.position;
+            bossDoor.transform.Translate(new Vector3(10, 0, 5), Space.World);
+            bossDoor = Instantiate(Resources.Load("BossDoor")) as GameObject;
             return true;
-        return false;
+        }
+        else
+        {
+            return false;
+        }
+        
+        
     }
 }
