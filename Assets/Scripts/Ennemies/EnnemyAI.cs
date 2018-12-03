@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using System;
 
-public class EnnemyAI : MonoBehaviour
+public class EnnemyAI : Entities
 {
     private float currentCooldown;
     public bool isDead = false;
@@ -166,5 +166,10 @@ public class EnnemyAI : MonoBehaviour
         var playerXPosition = Player.transform.position.x;
         var playerZPosition = Player.transform.position.z;
         Monster.transform.LookAt(new Vector3(playerXPosition, 0, playerZPosition));
+    }
+
+    override public string getTypeofSpawnable()
+    {
+        return "Ennemies";
     }
 }
