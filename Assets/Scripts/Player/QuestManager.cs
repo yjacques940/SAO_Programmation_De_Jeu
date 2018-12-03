@@ -5,10 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour {
+    public GameObject portal;
     public const int MonstersToKill = 5;
     public Text text;
     // Use this for initialization
     void Start () {
+        portal = GameObject.FindGameObjectWithTag("Portal");
+        portal.SetActive(false);
         text.text = "Tuer des champignons :"+ Environment.NewLine + 0 + " / " + MonstersToKill;
     }
 
@@ -16,6 +19,7 @@ public class QuestManager : MonoBehaviour {
     {
         if(BossDoorHasSpawn(monstersKilled))
         {
+            portal.SetActive(true);
             text.text = "La porte du boss" + Environment.NewLine + "est apparue!" + Environment.NewLine + "Trouvez la et tuez le boss!";
         }
         else
@@ -30,10 +34,6 @@ public class QuestManager : MonoBehaviour {
     {
         if (monstersKilled >= MonstersToKill)
         {
-            GameObject bossDoor = new GameObject();           
-            bossDoor.transform.position = this.transform.position;
-            bossDoor.transform.Translate(new Vector3(10, 0, 5), Space.World);
-            bossDoor = Instantiate(Resources.Load("BossDoor")) as GameObject;
             return true;
         }
         else

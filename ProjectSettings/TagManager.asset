@@ -12,6 +12,8 @@ TagManager:
   - PlayerWeaponHand
   - SpawnPoint
   - BossSpawnPoint
+  - PlayerSpawnPoint
+  - Portal
   layers:
   - Default
   - TransparentFX

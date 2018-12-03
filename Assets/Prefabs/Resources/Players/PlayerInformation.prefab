@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f77e4942975c7f428ab80fdc83d2d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portal: {fileID: 1560881356523606, guid: aa32f7f48a3d3f44d8fab1538b49255a, type: 2}
   text: {fileID: 114246251915319710}
 --- !u!114 &114263817611248598
 MonoBehaviour:
