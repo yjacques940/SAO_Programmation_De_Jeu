@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class player : MonoBehaviour
+public class player : Entities
 {
 
     int experience;
@@ -37,7 +37,12 @@ public class player : MonoBehaviour
     public float MaxHealth = 200;
     public float CurrentHealth;
     private int numberOfEnnemiesKilled = 0;
-
+    private bool dead;
+    public bool Dead
+    {
+        get { return dead; }
+        set { dead = value; }
+    }
     // Use this for initialization
     void Start()
     {
@@ -92,7 +97,7 @@ public class player : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if (Time.timeScale > 0 && CurrentHealth > 0)
+        if (Time.timeScale > 0 && CurrentHealth > 0 && !Dead)
         {
             if (controller.isGrounded)
             {
@@ -149,6 +154,13 @@ public class player : MonoBehaviour
                 isAttacking = false;
             }
         }
+        else
+        {
+            if (Input.GetAxis("Fire1") != 0)
+            {
+                Respawn();
+            }
+        }
     }
 
     public void Attack()
@@ -164,16 +176,12 @@ public class player : MonoBehaviour
                 {
                     if (!hit.transform.GetComponent<EnnemyAI>().isDead)
                     {
-                        float attackDamage = baseAttackDamage;
-                        if (weapon)
-                        {
-                            attackDamage += weapon.Damage;
-                        }
-                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(attackDamage);
+
+                        hit.transform.GetComponent<EnnemyAI>().IsGettingAttacked(CalculateAttackDamage());
                         if (hit.transform.GetComponent<EnnemyAI>().isDead)
                             HealPlayer(hit);
                     }
-                   
+
                 }
             }
             isAttacking = true;
@@ -183,10 +191,10 @@ public class player : MonoBehaviour
     private void HealPlayer(RaycastHit hit)
     {
         var lifeToHeal = hit.transform.GetComponent<EnnemyAI>().MaxLifeOFMonster * percentageToStealToEnnemy;
-        if(CurrentHealth + lifeToHeal < MaxHealth)
+        if (CurrentHealth + lifeToHeal < MaxHealth)
         {
             CurrentHealth = CurrentHealth + lifeToHeal;
-            
+
         }
         else
         {
@@ -202,11 +210,6 @@ public class player : MonoBehaviour
         GetComponentInChildren<QuestManager>().UpdateText(numberOfEnnemiesKilled);
     }
 
-    public bool IsDead()
-    {
-        return (CurrentHealth <= 0);
-    }
-
     public void DeclareDead()
     {
         anim.SetBool("isDead", true);
@@ -215,14 +218,69 @@ public class player : MonoBehaviour
 
     public void IsGettingAttacked(float damage)
     {
-        if (!IsDead())
+        if (!Dead)
         {
             if (!isAttacking)
                 anim.Play("DAMAGED00");
             CurrentHealth -= damage;
             HealthBar.fillAmount = CurrentHealth / MaxHealth;
-            if (IsDead()) DeclareDead();
+            if(CurrentHealth  <= 0)
+            {
+                Die();
+            }
         }
+    }
+
+
+    private float CalculateAttackDamage()
+    {
+        float attackDamage = baseAttackDamage;
+        if (weapon)
+        {
+            attackDamage += weapon.Damage;
+        }
+        return attackDamage;
+    }
+
+    private void Die()
+    {
+        Dead = true;
+        DeclareDead();
+    }
+
+    private void PenaliseDeath()
+    {
+        MaxHealth -= 5f;
+        //baseAttackDamage -= 1;
+    }
+
+    public override void Respawn()
+    {
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
+        this.transform.position = spawnPoint.transform.position;
+        Dead = false;
+        RefillHealthAmount(MaxHealth);
+        UpdateHealthBar();
+    }
+
+    private void RefillHealthAmount(float healingAmount)
+    {
+        CurrentHealth += healingAmount;
+        if (CurrentHealth >= MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+
+    }
+
+    private void UpdateHealthBar()
+    {
+        HealthBar.fillAmount = CurrentHealth / MaxHealth;
+    }
+
+    override public string getTypeofSpawnable()
+    {
+        return "Players";
     }
 
 }

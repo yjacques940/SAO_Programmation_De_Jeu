@@ -9,7 +9,7 @@ public class CameraFollower : MonoBehaviour
     GameObject cameraToLookAt;
 	// Use this for initialization
 	void Start () {
-        cameraToLookAt = GameObject.FindGameObjectWithTag("MainCamera");
+        cameraToLookAt = GameObject.FindGameObjectWithTag("Player");
 	}
 	
 	// Update is called once per frame
