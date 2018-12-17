@@ -478,10 +478,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   attackCooldown: 1
-  PlayerDetector: 10
+  PlayerDetector: 25
   MinimumDistance: 3
   CurrentLifeOFMonster: 0
-  MaxLifeOFMonster: 200
+  MaxLifeOFMonster: 1000
   Chasing: 1
   IsAttacking: 0
   AttackDamage: 25
